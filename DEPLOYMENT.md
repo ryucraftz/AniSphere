@@ -13,7 +13,7 @@
 ### Option 1: Deploy via Vercel Dashboard (Recommended)
 
 1. **Push to GitHub**:
-   ```bash
+   ```bash  
    git init
    git add .
    git commit -m "Initial commit - AniSphere"

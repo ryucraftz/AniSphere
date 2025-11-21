@@ -4,20 +4,6 @@ const path = require('path');
 const SCOPES = ['https://www.googleapis.com/auth/drive.readonly'];
 const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
-// In-memory cache for serverless environment
-let cache = null;
-let cacheTime = null;
-const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
-
-async function getAuthClient() {
-    // Parse service account from environment variable
-    const serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
-
-    const auth = new google.auth.GoogleAuth({
-        credentials: serviceAccount,
-        scopes: SCOPES,
-    });
-    return auth.getClient();
 }
 
 async function getWallpapers() {
