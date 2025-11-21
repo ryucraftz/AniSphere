@@ -4,6 +4,32 @@ const path = require('path');
 const SCOPES = ['https://www.googleapis.com/auth/drive.readonly'];
 const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
+// In-memory cache for serverless environment
+let cache = null;
+let cacheTime = null;
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
+
+async function getAuthClient() {
+    // Check if environment variable exists
+    if (!process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+        throw new Error('GOOGLE_SERVICE_ACCOUNT_KEY environment variable is not set');
+    }
+
+    // Parse service account from environment variable
+    let serviceAccount;
+    try {
+        serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+    } catch (error) {
+        console.error('Failed to parse GOOGLE_SERVICE_ACCOUNT_KEY:', error.message);
+        console.error('First 100 chars:', process.env.GOOGLE_SERVICE_ACCOUNT_KEY?.substring(0, 100));
+        throw new Error(`Invalid GOOGLE_SERVICE_ACCOUNT_KEY format: ${error.message}`);
+    }
+
+    const auth = new google.auth.GoogleAuth({
+        credentials: serviceAccount,
+        scopes: SCOPES,
+    });
+    return auth.getClient();
 }
 
 async function getWallpapers() {
