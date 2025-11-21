@@ -34,3 +34,5 @@ server/
 .env.local
 service-account-key.json
 cache.json
+vercel-env-key.txt
+convert-key.js
