@@ -44,7 +44,7 @@ function WallpaperGrid() {
                     'brook', 'jimbei', 'jinbe', 'thousand sunny', 'going merry', 'shanks',
                     'whitebeard', 'blackbeard', 'roger', 'ace', 'sabo', 'dressrosa', 'wano',
                     'marineford', 'alabasta', 'skypiea', 'sabaody', 'elbaf', 'mariejois',
-                    'enies lobby', 'thriller bark', 'impel down', 'law', 'kid', 'doflamingo',
+                    'enies lobby', 'thriller bark', 'impel down', 'law', 'eustass', 'doflamingo',
                     'buggy', 'akainu', 'kizaru', 'aokiji', 'garp', 'sengoku', 'mihawk',
                     'boa hancock', 'crocodile', 'moria', 'cipher pol', 'reverie', 'poneglyph'
                 ]
