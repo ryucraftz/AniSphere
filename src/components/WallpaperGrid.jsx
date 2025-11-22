@@ -48,10 +48,10 @@ function WallpaperGrid() {
                 }
                 @media (max-width: 768px) {
                     .wallpaper-grid {
-                        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Smaller cards on mobile */
-                        gap: 15px;
+                        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller cards on mobile */
+                        gap: 12px;
                     }
-                    .container { padding: 2rem 15px !important; }
+                    .container { padding: 2rem 12px !important; }
                 }
             `}</style>
 

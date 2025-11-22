@@ -93,9 +93,9 @@ function Hero() {
             </div>
             <style>{`
         @media (max-width: 768px) {
-           .container { flex-direction: column; text-align: center; padding-top: 2rem; }
-           h1 { font-size: 2.5rem !important; }
-           p { font-size: 1rem !important; margin: 0 auto 2rem !important; }
+           .container { flex-direction: column; text-align: center; padding-top: 3rem; }
+           h1 { font-size: 2.2rem !important; line-height: 1.2 !important; }
+           p { font-size: 1rem !important; margin: 0 auto 2rem !important; padding: 0 1rem; }
            .hero-3d-container { display: none !important; }
         }
         @media (min-width: 768px) {

@@ -134,7 +134,14 @@ function DetailModal({ wallpaper, onClose }) {
                                 width: 100%;
                                 justify-content: center;
                             }
-                            h2 { font-size: 1.5rem !important; }
+                            h2 { 
+                                font-size: 1.5rem !important; 
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                max-width: 100%;
+                                display: block;
+                            }
                         }
                     `}</style>
                 </motion.div>

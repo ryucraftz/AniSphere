@@ -45,16 +45,34 @@ function Header() {
                 {isMenuOpen && (
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
+                        animate={{ height: '100vh', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        style={{ overflow: 'hidden', background: 'rgba(19, 20, 28, 0.95)', backdropFilter: 'blur(10px)' }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100vh',
+                            background: '#0b0c11',
+                            zIndex: 99,
+                            paddingTop: '80px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
                     >
-                        <ul style={{ display: 'flex', flexDirection: 'column', padding: '2rem', gap: '1.5rem', alignItems: 'center' }}>
-                            <li className="nav-item"><a href="#" onClick={() => setIsMenuOpen(false)}>Home</a></li>
-                            <li className="nav-item"><a href="#" onClick={() => setIsMenuOpen(false)}>Categories</a></li>
-                            <li className="nav-item"><a href="#" onClick={() => setIsMenuOpen(false)}>3D Wallpapers</a></li>
-                            <li className="nav-item"><a href="#" onClick={() => setIsMenuOpen(false)}>Collections</a></li>
-                            <li className="nav-item"><a href="#" onClick={() => setIsMenuOpen(false)}>About</a></li>
+                        <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', width: '100%' }}>
+                            {['Home', 'Categories', '3D Wallpapers', 'Collections', 'About'].map((item) => (
+                                <li key={item} className="nav-item" style={{ width: '100%', textAlign: 'center' }}>
+                                    <a
+                                        href="#"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        style={{ fontSize: '1.5rem', display: 'block', padding: '1rem' }}
+                                    >
+                                        {item}
+                                    </a>
+                                </li>
+                            ))}
                         </ul>
                     </motion.div>
                 )}
