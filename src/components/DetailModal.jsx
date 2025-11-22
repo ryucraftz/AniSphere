@@ -87,6 +87,9 @@ function DetailModal({ wallpaper, onClose }) {
                         <img
                             src={wallpaper.image}
                             alt={wallpaper.title}
+                            className="prevent-download"
+                            draggable="false"
+                            onContextMenu={(e) => e.preventDefault()}
                             style={{ width: '100%', height: '100%', objectFit: 'contain', maxHeight: '60vh', background: '#000' }}
                         />
                     </div>

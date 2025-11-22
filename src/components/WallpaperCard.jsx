@@ -19,6 +19,9 @@ function WallpaperCard({ wallpaper, onClick }) {
                 <img
                     src={wallpaper.image}
                     alt={wallpaper.title}
+                    className="prevent-download"
+                    draggable="false"
+                    onContextMenu={(e) => e.preventDefault()}
                     style={{
                         position: 'absolute',
                         top: 0,
