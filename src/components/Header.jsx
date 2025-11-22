@@ -11,11 +11,10 @@ function Header() {
             position: 'sticky',
             top: 0,
             zIndex: 100,
-            zIndex: 100,
-            padding: '0.5rem 0'
+            padding: '0.6rem 0'
         }}>
-            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap' }}>
-                <div className="logo" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
+            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap', width: '100%' }}>
+                <div className="logo" style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
                     AniSphere
                 </div>
 
@@ -30,7 +29,7 @@ function Header() {
                     </ul>
                 </nav>
 
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
                     <Search color="var(--text-color)" size={20} style={{ cursor: 'pointer' }} />
                     <ThemeToggle />
                     <button
@@ -103,7 +102,7 @@ function Header() {
           .desktop-nav { display: flex; }
           .mobile-toggle { display: none; }
           header { padding: 1rem 0; }
-          .logo { font-size: 1.5rem; }
+          .logo { font-size: 1.5rem !important; }
         }
       `}</style>
         </header>

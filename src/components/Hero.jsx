@@ -45,11 +45,19 @@ function Hero() {
                 <div style={{ flex: 1 }}>
                     <motion.img
                         src="https://i.giphy.com/Tgvn82bqJT36lkVqDZ.webp"
-                        alt="Anime Eye"
+                        alt="One Piece Luffy"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8 }}
-                        style={{ width: '100px', marginBottom: '1rem', borderRadius: '10px' }}
+                        style={{
+                            width: '100%',
+                            maxWidth: '500px',
+                            height: 'auto',
+                            borderRadius: '15px',
+                            display: 'block',
+                            margin: '0 auto 1.5rem auto',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                        }}
                     />
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
