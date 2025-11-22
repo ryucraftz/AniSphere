@@ -8,7 +8,7 @@ export const WALLPAPERS = [
 ];
 
 export const COLLECTIONS = [
-    { id: 1, title: 'One Piece', color: '#ff0', image: 'https://static.wikia.nocookie.net/onepiece/images/8/87/One_Piece_Anime_Logo.png/revision/latest?cb=20250813015436?q=80&w=1000&auto=format&fit=crop' },
+    { id: 1, title: 'One Piece', color: '#ff0', image: 'https://4kwallpapers.com/images/wallpapers/one-piece-character-3840x2160-15328.jpeg?q=80&w=1000&auto=format&fit=crop' },
     { id: 2, title: 'Studio Ghibli', color: '#0f0', image: 'https://amherstwire.com/wp-content/uploads/2021/02/my_neighbor_totoro_hero-900x507.jpg?q=80&w=1000&auto=format&fit=crop' },
     { id: 3, title: 'Dark Anime', color: '#f0f', image: 'https://4kwallpapers.com/images/walls/thumbs/19127.jpg?q=80&w=1000&auto=format&fit=crop' },
     { id: 4, title: 'Mecha', color: '#0ff', image: 'https://images2.alphacoders.com/710/710961.png?q=80&w=1000&auto=format&fit=crop' },
