@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Search, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
@@ -8,6 +8,21 @@ function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const { searchQuery, setSearchQuery } = useSearch();
+
+    // Auto-close search modal on mobile after typing
+    useEffect(() => {
+        if (searchQuery && isSearchOpen) {
+            // Check if mobile view
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                // Close modal after 800ms to let user see results
+                const timer = setTimeout(() => {
+                    setIsSearchOpen(false);
+                }, 800);
+                return () => clearTimeout(timer);
+            }
+        }
+    }, [searchQuery, isSearchOpen]);
 
     return (
         <header className="glass" style={{
