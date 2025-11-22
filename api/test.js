@@ -1,4 +1,4 @@
-// Minimal test endpoint
-module.exports = (req, res) => {
+// Minimal test endpoint - ES module syntax
+export default function handler(req, res) {
     res.status(200).json({ message: 'Hello from Vercel API!', timestamp: new Date().toISOString() });
-};
+}

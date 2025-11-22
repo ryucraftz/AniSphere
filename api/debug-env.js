@@ -1,5 +1,5 @@
-// Ultra-safe debug endpoint with comprehensive error handling
-module.exports = async (req, res) => {
+// Ultra-safe debug endpoint with comprehensive error handling - ES module syntax
+export default async function handler(req, res) {
     try {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Content-Type', 'application/json');
@@ -37,4 +37,4 @@ module.exports = async (req, res) => {
             stack: error.stack
         });
     }
-};
+}

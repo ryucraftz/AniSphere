@@ -1,6 +1,6 @@
-const { getImageProxy } = require('../driveService');
+import { getImageProxy } from '../driveService.js';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -30,4 +30,4 @@ module.exports = async (req, res) => {
         console.error('Error proxying image:', error);
         res.status(500).send('Failed to load image');
     }
-};
+}

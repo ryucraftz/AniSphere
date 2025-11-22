@@ -1,6 +1,6 @@
-const { getWallpapers } = require('./driveService');
+import { getWallpapers } from './driveService.js';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -19,6 +19,6 @@ module.exports = async (req, res) => {
         res.status(200).json(wallpapers);
     } catch (error) {
         console.error('Error fetching wallpapers:', error);
-        res.status(500).json({ error: 'Failed to fetch wallpapers' });
+        res.status(500).json({ error: 'Failed to fetch wallpapers', message: error.message });
     }
-};
+}
