@@ -92,13 +92,17 @@ function Hero() {
                 </div>
             </div>
             <style>{`
-        @media (max-width: 768px) {
-           .container { flex-direction: column; text-align: center; padding-top: 3rem; }
-           h1 { font-size: 2.2rem !important; line-height: 1.2 !important; }
-           p { font-size: 1rem !important; margin: 0 auto 2rem !important; padding: 0 1rem; }
-           .hero-3d-container { display: none !important; }
-        }
+        /* Mobile First Styles */
+        .container { flex-direction: column; text-align: center; padding-top: 3rem; }
+        h1 { font-size: clamp(2.2rem, 5vw, 4rem) !important; line-height: 1.2 !important; }
+        p { font-size: clamp(1rem, 2vw, 1.2rem) !important; margin: 0 auto 2rem !important; padding: 0 1rem; }
+        .hero-3d-container { display: none !important; }
+
+        /* Desktop Styles */
         @media (min-width: 768px) {
+            .container { flex-direction: row; text-align: left; padding-top: 0; }
+            h1 { line-height: 1.1 !important; }
+            p { margin: 0 0 2rem !important; padding: 0; }
             .hero-3d-container { display: block !important; }
         }
       `}</style>

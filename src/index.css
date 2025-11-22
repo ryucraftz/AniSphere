@@ -8,6 +8,12 @@
   --glass-bg: rgba(19, 20, 28, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
   --font-main: 'Outfit', sans-serif;
+
+  /* Breakpoints */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
 }
 
 * {
@@ -22,6 +28,8 @@ body {
   font-family: var(--font-main);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  /* Base size */
 }
 
 a {
@@ -35,9 +43,16 @@ ul {
 
 /* Utility Classes */
 .container {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
 }
 
 .glass {

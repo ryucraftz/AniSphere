@@ -41,17 +41,21 @@ function WallpaperGrid() {
                 ))}
             </div>
             <style>{`
+                /* Mobile First Grid */
                 .wallpaper-grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                    gap: 20px;
+                    grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
+                    gap: 12px;
                 }
-                @media (max-width: 768px) {
+                .container { padding: 2rem 12px; }
+
+                /* Desktop Styles */
+                @media (min-width: 768px) {
                     .wallpaper-grid {
-                        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller cards on mobile */
-                        gap: 12px;
+                        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                        gap: 20px;
                     }
-                    .container { padding: 2rem 12px !important; }
+                    .container { padding: 4rem 20px; }
                 }
             `}</style>
 

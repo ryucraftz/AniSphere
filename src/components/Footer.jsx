@@ -62,11 +62,19 @@ function Footer() {
         .hover-link:hover {
           color: var(--primary-color);
         }
-        @media (max-width: 768px) {
-          .container > div:first-child {
+        
+        /* Mobile First Styles */
+        .container > div:first-child {
             flex-direction: column;
-            gap: 2rem !important;
-          }
+            gap: 2rem;
+        }
+
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            .container > div:first-child {
+                flex-direction: row;
+                gap: 2rem;
+            }
         }
       `}</style>
         </footer>

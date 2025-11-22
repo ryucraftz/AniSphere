@@ -88,15 +88,19 @@ function Header() {
           color: var(--primary-color);
           text-shadow: 0 0 5px var(--primary-color);
         }
-        .desktop-nav { display: flex; }
-        .mobile-toggle { display: none; }
         
-        @media (max-width: 768px) {
-          .desktop-nav { display: none; }
-          .mobile-toggle { display: block; }
-          header { padding: 0.8rem 0 !important; }
-          .logo { font-size: 1.3rem !important; }
-          .container { padding: 0 1.5rem; }
+        /* Mobile First Styles */
+        .desktop-nav { display: none; }
+        .mobile-toggle { display: block; }
+        header { padding: 0.8rem 0; }
+        .logo { font-size: 1.3rem; }
+        
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+          .desktop-nav { display: flex; }
+          .mobile-toggle { display: none; }
+          header { padding: 1rem 0; }
+          .logo { font-size: 1.5rem; }
         }
       `}</style>
         </header>
