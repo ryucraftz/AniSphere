@@ -32,30 +32,82 @@ function Footer() {
                     <div>
                         <h4 style={{ color: 'var(--text-color)', marginBottom: '1rem' }}>Legal</h4>
                         <ul style={{ color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                            <li><a href="#" className="hover-link">Terms of Service</a></li>
+                            <li><a href="#" className="hover-link">Privacy Policy</a></li>
+                            <li><a href="#" className="hover-link">Copyright</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 style={{ color: 'var(--text-color)', marginBottom: '1rem' }}>Connect</h4>
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                            <a href="https://github.com/ryucraftz" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.3s' }} onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}>
+                                <Github size={20} />
+                            </a>
+                            <a href="https://twitter.com/ryucraftz?s=20" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.3s' }} onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}>
+                                <Twitter size={20} />
+                            </a>
+                            <a href="https://www.instagram.com/ryucraftz/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.3s' }} onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}>
+                                <Instagram size={20} />
+                            </a>
+                            <a href="https://www.ryucraftz.tech/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.3s' }} onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}>
+                                <Disc size={20} />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div style={{
+                    paddingTop: '2rem',
+                    borderTop: '1px solid var(--glass-border)',
+                    textAlign: 'center',
+                    color: 'var(--text-muted)',
+                    fontSize: '0.9rem'
+                }}>
+                    &copy; 2025 AniSphere. All rights reserved.
+                </div>
+            </div>
+            <style>{`
+        .hover-link:hover {
+          color: var(--primary-color);
+        }
+        
+        /* Mobile First Styles */
+        footer > div > div:first-child {
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        footer > div > div:first-child > div {
+            text-align: center;
+        }
+        
+        footer > div > div:first-child > div > div {
+            justify-content: center;
         }
 
-                            /* Desktop Styles */
-                            @media (min-width: 768px) {
-                                footer > div > div:first-child {
-                                flex - direction: row;
-                            gap: 2rem;
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            footer > div > div:first-child {
+                flex-direction: row;
+                gap: 2rem;
             }
             
             footer > div > div:first-child > div {
-                                text - align: left;
+                text-align: left;
             }
             
             footer > div > div:first-child > div > div {
-                                justify - content: flex-start;
+                justify-content: flex-start;
             }
-
-                            .footer-description {
-                                max - width: 300px;
+            
+            .footer-description {
+                max-width: 300px;
             }
         }
       `}</style>
-                    </footer>
-                    );
+        </footer>
+    );
 }
 
-                    export default Footer;
+export default Footer;
