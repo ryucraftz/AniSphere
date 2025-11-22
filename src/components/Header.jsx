@@ -37,92 +37,36 @@ function Header() {
                 </div>
 
                 {/* Desktop Nav */}
-                <nav className="desktop-nav">
-                    <ul style={{ display: 'flex', gap: '2rem' }}>
-                        <li className="nav-item"><a href="#">Home</a></li>
-                        <li className="nav-item"><a href="#">Categories</a></li>
-                        <li className="nav-item"><a href="#">3D Wallpapers</a></li>
-                        <li className="nav-item">
-                            <a
-                                href="#"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
-                                }}
-                            >
-                                Collections
-                            </a>
-                        </li>
-                        <li className="nav-item"><a href="#">About</a></li>
-                    </ul>
-                </nav>
-
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                    <Search
-                        color="var(--text-color)"
-                        size={20}
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => setIsSearchOpen(!isSearchOpen)}
+                color="var(--text-color)"
+                size={20}
+                style={{ cursor: 'pointer' }}
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
                     />
-                    <ThemeToggle />
-                    <button
-                        className="mobile-toggle"
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-                    >
-                        {isMenuOpen ? <X color="var(--text-color)" size={24} /> : <Menu color="var(--text-color)" size={24} />}
-                    </button>
-                </div>
+                <ThemeToggle />
+                <button
+                    className="mobile-toggle"
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                >
+                    {isMenuOpen ? <X color="var(--text-color)" size={24} /> : <Menu color="var(--text-color)" size={24} />}
+                </button>
             </div>
+        </div>
 
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {isMenuOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: '100vh', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100vh',
-                            background: '#0b0c11',
-                            zIndex: 99,
-                            paddingTop: '80px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', width: '100%' }}>
-                            {['Home', 'Categories', '3D Wallpapers', 'Collections', 'About'].map((item) => (
-                                <li key={item} className="nav-item" style={{ width: '100%', textAlign: 'center' }}>
-                                    <a
-                                        href="#"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            setIsMenuOpen(false);
-                                            if (item === 'Collections') {
-                                                setTimeout(() => {
-                                                    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
-                                                }, 300);
-                                            }
-                                        }}
-                                        style={{ fontSize: '1.5rem', display: 'block', padding: '1rem' }}
-                                    >
-                                        {item}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* Search Modal */}
-            <AnimatePresence>
+            {/* Mobile Menu */ }
+    <AnimatePresence>
+        {isMenuOpen && (
+            <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: '100vh', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100vh',
+                    background: '#0b0c11',
                 {isSearchOpen && (
                     <>
                         {/* Backdrop */}
@@ -253,7 +197,7 @@ function Header() {
           }
         }
       `}</style>
-        </header>
+        </header >
     );
 }
 

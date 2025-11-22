@@ -3,7 +3,7 @@ import { Github, Twitter, Instagram, Disc } from 'lucide-react';
 
 function Footer() {
     return (
-        <footer style={{
+        <footer id="about" style={{
             background: 'var(--footer-bg)',
             padding: '4rem 0',
             marginTop: '4rem',
