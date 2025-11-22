@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, Search, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ThemeToggle from './ThemeToggle';
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,13 +30,14 @@ function Header() {
                 </nav>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                    <Search color="white" size={20} style={{ cursor: 'pointer' }} />
+                    <Search color="var(--text-color)" size={20} style={{ cursor: 'pointer' }} />
+                    <ThemeToggle />
                     <button
                         className="mobile-toggle"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                     >
-                        {isMenuOpen ? <X color="white" size={24} /> : <Menu color="white" size={24} />}
+                        {isMenuOpen ? <X color="var(--text-color)" size={24} /> : <Menu color="var(--text-color)" size={24} />}
                     </button>
                 </div>
             </div>
