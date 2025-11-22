@@ -2,8 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { COLLECTIONS } from '../data/mockData';
 import ScrollScene from './ScrollScene';
+import { useSearch } from '../context/SearchContext';
 
 function FeaturedCollections() {
+    const { setSelectedCollection, setSearchQuery } = useSearch();
+
+    const handleCollectionClick = (collection) => {
+        // Only allow One Piece collection for now
+        if (collection.id === 1) {
+            setSelectedCollection(collection);
+            setSearchQuery(''); // Clear search when selecting collection
+            // Scroll to wallpapers section
+            document.getElementById('trending')?.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <section className="container" style={{ padding: '4rem 20px', position: 'relative' }}>
             <div style={{ position: 'absolute', right: 0, top: -50, width: '300px', height: '300px', zIndex: 0 }}>
@@ -16,32 +29,36 @@ function FeaturedCollections() {
                         key={col.id}
                         className="glass collection-card"
                         whileHover={{ scale: 1.05 }}
+                        onClick={() => handleCollectionClick(col)}
                         style={{
                             minWidth: '300px',
                             height: '200px',
                             borderRadius: '15px',
                             position: 'relative',
                             overflow: 'hidden',
-                            cursor: 'pointer',
-                            flexShrink: 0
+                            cursor: col.id === 1 ? 'pointer' : 'default',
+                            flexShrink: 0,
+                            opacity: col.id === 1 ? 1 : 0.7
                         }}
                     >
                         <img src={col.image} alt={col.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }} />
-                        <div style={{
-                            position: 'absolute',
-                            top: '10px',
-                            right: '10px',
-                            background: 'rgba(255, 110, 199, 0.8)',
-                            color: '#fff',
-                            padding: '0.3rem 0.8rem',
-                            borderRadius: '20px',
-                            fontSize: '0.8rem',
-                            fontWeight: 'bold',
-                            backdropFilter: 'blur(5px)',
-                            boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
-                        }}>
-                            Coming Soon
-                        </div>
+                        {col.id !== 1 && (
+                            <div style={{
+                                position: 'absolute',
+                                top: '10px',
+                                right: '10px',
+                                background: 'rgba(255, 110, 199, 0.8)',
+                                color: '#fff',
+                                padding: '0.3rem 0.8rem',
+                                borderRadius: '20px',
+                                fontSize: '0.8rem',
+                                fontWeight: 'bold',
+                                backdropFilter: 'blur(5px)',
+                                boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+                            }}>
+                                Coming Soon
+                            </div>
+                        )}
                         <div style={{
                             position: 'absolute',
                             bottom: 0,

@@ -12,9 +12,21 @@ export const useSearch = () => {
 
 export const SearchProvider = ({ children }) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCollection, setSelectedCollection] = useState(null);
+
+    const clearFilters = () => {
+        setSearchQuery('');
+        setSelectedCollection(null);
+    };
 
     return (
-        <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>
+        <SearchContext.Provider value={{
+            searchQuery,
+            setSearchQuery,
+            selectedCollection,
+            setSelectedCollection,
+            clearFilters
+        }}>
             {children}
         </SearchContext.Provider>
     );

@@ -3,13 +3,14 @@ import WallpaperCard from './WallpaperCard';
 import FilterBar from './FilterBar';
 import DetailModal from './DetailModal';
 import { useSearch } from '../context/SearchContext';
+import { X } from 'lucide-react';
 
 function WallpaperGrid() {
     const [selectedWallpaper, setSelectedWallpaper] = useState(null);
     const [wallpapers, setWallpapers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { searchQuery } = useSearch();
+    const { searchQuery, selectedCollection, clearFilters } = useSearch();
 
     useEffect(() => {
         const fetchWallpapers = async () => {
@@ -28,32 +29,86 @@ function WallpaperGrid() {
         fetchWallpapers();
     }, []);
 
-    // Filter wallpapers based on search query
+    // Filter wallpapers based on search query and collection
     const filteredWallpapers = useMemo(() => {
-        if (!searchQuery.trim()) {
-            return wallpapers;
+        let filtered = wallpapers;
+
+        // Filter by collection
+        if (selectedCollection) {
+            const collectionKeywords = {
+                1: [
+                    'one piece', 'kaizoku', 'nakama', 'grand line', 'new world', 'yonko',
+                    'devil fruit', 'akuma no mi', 'paramecia', 'zoan', 'logia', 'haki',
+                    'kenbunshoku', 'busoshoku', 'haoshoku', 'fish-man', 'gyojin', 'merfolk',
+                    'luffy', 'zoro', 'nami', 'usopp', 'sanji', 'chopper', 'robin', 'franky',
+                    'brook', 'jimbei', 'jinbe', 'thousand sunny', 'going merry', 'shanks',
+                    'whitebeard', 'blackbeard', 'roger', 'ace', 'sabo', 'dressrosa', 'wano',
+                    'marineford', 'alabasta', 'skypiea', 'sabaody', 'elbaf', 'mariejois',
+                    'enies lobby', 'thriller bark', 'impel down', 'law', 'kid', 'doflamingo',
+                    'buggy', 'akainu', 'kizaru', 'aokiji', 'garp', 'sengoku', 'mihawk',
+                    'boa hancock', 'crocodile', 'moria', 'cipher pol', 'reverie', 'poneglyph'
+                ]
+            };
+
+            const keywords = collectionKeywords[selectedCollection.id] || [];
+            filtered = filtered.filter(wp => {
+                const title = wp.title?.toLowerCase() || '';
+                const id = wp.id?.toLowerCase() || '';
+                return keywords.some(keyword => title.includes(keyword) || id.includes(keyword));
+            });
         }
 
-        const query = searchQuery.toLowerCase();
-        return wallpapers.filter(wp => {
-            // Search in title
-            const titleMatch = wp.title?.toLowerCase().includes(query);
+        // Filter by search query
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase();
+            filtered = filtered.filter(wp => {
+                const titleMatch = wp.title?.toLowerCase().includes(query);
+                const filenameMatch = wp.id?.toLowerCase().includes(query);
+                return titleMatch || filenameMatch;
+            });
+        }
 
-            // Search in filename/id (supports subword matching)
-            const filenameMatch = wp.id?.toLowerCase().includes(query);
-
-            return titleMatch || filenameMatch;
-        });
-    }, [wallpapers, searchQuery]);
+        return filtered;
+    }, [wallpapers, searchQuery, selectedCollection]);
 
     if (loading) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-color)' }}>Loading wallpapers...</div>;
     if (error) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'red' }}>Error: {error}</div>;
 
     return (
         <section id="trending" className="container" style={{ padding: '4rem 20px' }}>
-            <h2 className="neon-text" style={{ fontSize: '2rem', marginBottom: '2rem' }}>
-                {searchQuery ? `Search Results for "${searchQuery}"` : 'Trending Wallpapers'}
-            </h2>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <h2 className="neon-text" style={{ fontSize: '2rem', margin: 0 }}>
+                    {selectedCollection
+                        ? `${selectedCollection.title} Collection`
+                        : searchQuery
+                            ? `Search Results for "${searchQuery}"`
+                            : 'Trending Wallpapers'
+                    }
+                </h2>
+                {(selectedCollection || searchQuery) && (
+                    <button
+                        onClick={clearFilters}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            borderRadius: '8px',
+                            padding: '0.5rem 1rem',
+                            color: 'var(--text-color)',
+                            cursor: 'pointer',
+                            fontSize: '0.9rem',
+                            transition: 'all 0.3s'
+                        }}
+                        onMouseEnter={(e) => e.target.style.background = 'var(--primary-color)'}
+                        onMouseLeave={(e) => e.target.style.background = 'var(--glass-bg)'}
+                    >
+                        <X size={16} />
+                        Clear Filter
+                    </button>
+                )}
+            </div>
 
             <FilterBar />
 
@@ -64,7 +119,7 @@ function WallpaperGrid() {
                     color: 'var(--text-muted)'
                 }}>
                     <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>No wallpapers found</p>
-                    <p style={{ fontSize: '1rem' }}>Try a different search term</p>
+                    <p style={{ fontSize: '1rem' }}>Try a different search term or collection</p>
                 </div>
             ) : (
                 <div className="wallpaper-grid">
