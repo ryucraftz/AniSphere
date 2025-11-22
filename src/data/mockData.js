@@ -8,8 +8,9 @@ export const WALLPAPERS = [
 ];
 
 export const COLLECTIONS = [
-    { id: 1, title: 'Cyberpunk Tokyo', color: '#f0f', image: 'https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?q=80&w=1000&auto=format&fit=crop' },
-    { id: 2, title: 'Dreamy Clouds', color: '#0ff', image: 'https://images.unsplash.com/photo-1534067783741-51417aa4e0a9?q=80&w=1000&auto=format&fit=crop' },
-    { id: 3, title: 'Epic Battles', color: '#ff0', image: 'https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=1000&auto=format&fit=crop' },
-    { id: 4, title: 'Retro Wave', color: '#0f0', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop' },
+    { id: 1, title: 'One Piece', color: '#ff0', image: 'https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=1000&auto=format&fit=crop' },
+    { id: 2, title: 'Studio Ghibli', color: '#0f0', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop' },
+    { id: 3, title: 'Dark Anime', color: '#f0f', image: 'https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?q=80&w=1000&auto=format&fit=crop' },
+    { id: 4, title: 'Mecha', color: '#0ff', image: 'https://images.unsplash.com/photo-1614726365723-49cfae987c94?q=80&w=1000&auto=format&fit=crop' },
+    { id: 5, title: 'Scenery', color: '#0ff', image: 'https://images.unsplash.com/photo-1534067783741-51417aa4e0a9?q=80&w=1000&auto=format&fit=crop' },
 ];
