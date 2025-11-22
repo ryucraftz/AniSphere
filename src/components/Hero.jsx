@@ -55,7 +55,7 @@ function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        style={{ fontSize: '1.2rem', color: '#ccc', marginBottom: '2rem', maxWidth: '500px' }}
+                        style={{ fontSize: '1.2rem', color: 'var(--text-muted)', marginBottom: '2rem', maxWidth: '500px' }}
                     >
                         Download high-resolution wallpapers with cinematic depth and 3D detail.
                     </motion.p>

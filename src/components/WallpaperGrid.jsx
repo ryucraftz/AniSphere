@@ -26,7 +26,7 @@ function WallpaperGrid() {
         fetchWallpapers();
     }, []);
 
-    if (loading) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: '#fff' }}>Loading wallpapers...</div>;
+    if (loading) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-color)' }}>Loading wallpapers...</div>;
     if (error) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'red' }}>Error: {error}</div>;
 
     return (

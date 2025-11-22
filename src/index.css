@@ -5,6 +5,8 @@
   --primary-color: #25f4ee;
   --secondary-color: #ff6ec7;
   --text-color: #f6f6f6;
+  --text-muted: #888888;
+  --footer-bg: #0b0c11;
   --glass-bg: rgba(19, 20, 28, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
   --font-main: 'Outfit', sans-serif;
@@ -21,6 +23,8 @@
   --primary-color: #00b4d8;
   --secondary-color: #ff006e;
   --text-color: #1a1a1a;
+  --text-muted: #555555;
+  --footer-bg: #e0e0e0;
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.1);
 }
