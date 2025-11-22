@@ -12,10 +12,8 @@ function Header() {
     // Auto-close search modal on mobile after typing
     useEffect(() => {
         if (searchQuery && isSearchOpen) {
-            // Check if mobile view
             const isMobile = window.innerWidth < 768;
             if (isMobile) {
-                // Close modal after 800ms to let user see results
                 const timer = setTimeout(() => {
                     setIsSearchOpen(false);
                 }, 800);
@@ -23,6 +21,14 @@ function Header() {
             }
         }
     }, [searchQuery, isSearchOpen]);
+
+    const handleNavClick = (item) => {
+        if (item === 'Collections') {
+            document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+        } else if (item === 'About') {
+            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
         <header className="glass" style={{
@@ -37,39 +43,100 @@ function Header() {
                 </div>
 
                 {/* Desktop Nav */}
-                color="var(--text-color)"
-                size={20}
-                style={{ cursor: 'pointer' }}
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                    />
-                <ThemeToggle />
-                <button
-                    className="mobile-toggle"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-                >
-                    {isMenuOpen ? <X color="var(--text-color)" size={24} /> : <Menu color="var(--text-color)" size={24} />}
-                </button>
-            </div>
-        </div>
+                <nav className="desktop-nav">
+                    <ul style={{ display: 'flex', gap: '2rem' }}>
+                        <li className="nav-item"><a href="#">Home</a></li>
+                        <li className="nav-item">
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleNavClick('Collections');
+                                }}
+                            >
+                                Collections
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleNavClick('About');
+                                }}
+                            >
+                                About
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 
-            {/* Mobile Menu */ }
-    <AnimatePresence>
-        {isMenuOpen && (
-            <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: '100vh', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100vh',
-                    background: '#0b0c11',
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <Search
+                        color="var(--text-color)"
+                        size={20}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => setIsSearchOpen(!isSearchOpen)}
+                    />
+                    <ThemeToggle />
+                    <button
+                        className="mobile-toggle"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                    >
+                        {isMenuOpen ? <X color="var(--text-color)" size={24} /> : <Menu color="var(--text-color)" size={24} />}
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: '100vh', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100vh',
+                            background: '#0b0c11',
+                            zIndex: 99,
+                            paddingTop: '80px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', width: '100%' }}>
+                            {['Home', 'Collections', 'About'].map((item) => (
+                                <li key={item} className="nav-item" style={{ width: '100%', textAlign: 'center' }}>
+                                    <a
+                                        href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setIsMenuOpen(false);
+                                            setTimeout(() => {
+                                                handleNavClick(item);
+                                            }, 300);
+                                        }}
+                                        style={{ fontSize: '1.5rem', display: 'block', padding: '1rem' }}
+                                    >
+                                        {item}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Search Modal */}
+            <AnimatePresence>
                 {isSearchOpen && (
                     <>
-                        {/* Backdrop */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -78,7 +145,6 @@ function Header() {
                             className="search-backdrop"
                         />
 
-                        {/* Search Content */}
                         <motion.div
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -120,7 +186,6 @@ function Header() {
           text-shadow: 0 0 5px var(--primary-color);
         }
         
-        /* Search Styles - Mobile First */
         .search-backdrop {
             position: fixed;
             top: 0;
@@ -155,20 +220,17 @@ function Header() {
             padding: 0.75rem 0;
         }
         
-        /* Mobile First Styles */
         .desktop-nav { display: none; }
         .mobile-toggle { display: block; }
         header { padding: 0.8rem 0; }
         .logo { font-size: 1.3rem; }
         
-        /* Desktop Styles */
         @media (min-width: 768px) {
           .desktop-nav { display: flex; }
           .mobile-toggle { display: none; }
           header { padding: 1rem 0; }
           .logo { font-size: 1.5rem !important; }
           
-          /* Desktop Search Modal */
           .search-backdrop {
               background: transparent;
               backdrop-filter: none;
@@ -197,7 +259,7 @@ function Header() {
           }
         }
       `}</style>
-        </header >
+        </header>
     );
 }
 
