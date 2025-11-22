@@ -12,7 +12,7 @@ function Footer() {
         }}>
             <div className="container">
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '2rem', marginBottom: '3rem' }}>
-                    <div style={{ maxWidth: '300px' }}>
+                    <div className="footer-description">
                         <h3 style={{ fontSize: '1.5rem', color: 'var(--primary-color)', marginBottom: '1rem' }}>AniSphere</h3>
                         <p style={{ color: 'var(--text-muted)', lineHeight: '1.6' }}>
                             Immersive anime wallpapers for the next generation. Experience the depth of your favorite worlds.
@@ -91,6 +91,10 @@ function Footer() {
             
             footer > div > div:first-child > div > div {
                 justify-content: flex-start;
+            }
+            
+            .footer-description {
+                max-width: 300px;
             }
         }
       `}</style>
