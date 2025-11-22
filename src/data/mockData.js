@@ -9,8 +9,9 @@ export const WALLPAPERS = [
 
 export const COLLECTIONS = [
     { id: 1, title: 'One Piece', color: '#ff0', image: 'https://4kwallpapers.com/images/wallpapers/one-piece-character-3840x2160-15328.jpeg?q=80&w=1000&auto=format&fit=crop' },
-    { id: 2, title: 'Studio Ghibli', color: '#0f0', image: 'https://amherstwire.com/wp-content/uploads/2021/02/my_neighbor_totoro_hero-900x507.jpg?q=80&w=1000&auto=format&fit=crop' },
-    { id: 3, title: 'Dark Anime', color: '#f0f', image: 'https://4kwallpapers.com/images/walls/thumbs/19127.jpg?q=80&w=1000&auto=format&fit=crop' },
-    { id: 4, title: 'Mecha', color: '#0ff', image: 'https://images2.alphacoders.com/710/710961.png?q=80&w=1000&auto=format&fit=crop' },
-    { id: 5, title: 'Scenery', color: '#0ff', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlcm9X3yCjuqbeeyxPjAhDK8NLVRzfuy4rA&s?q=80&w=1000&auto=format&fit=crop' },
+    { id: 2, title: 'Wuthering Waves', color: '#0ff', image: 'https://images.alphacoders.com/136/1360968.jpeg?q=80&w=1000&auto=format&fit=crop' },
+    { id: 3, title: 'Studio Ghibli', color: '#0f0', image: 'https://amherstwire.com/wp-content/uploads/2021/02/my_neighbor_totoro_hero-900x507.jpg?q=80&w=1000&auto=format&fit=crop' },
+    { id: 4, title: 'Dark Anime', color: '#f0f', image: 'https://4kwallpapers.com/images/walls/thumbs/19127.jpg?q=80&w=1000&auto=format&fit=crop' },
+    { id: 5, title: 'Mecha', color: '#0ff', image: 'https://images2.alphacoders.com/710/710961.png?q=80&w=1000&auto=format&fit=crop' },
+    { id: 6, title: 'Scenery', color: '#0ff', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlcm9X3yCjuqbeeyxPjAhDK8NLVRzfuy4rA&s?q=80&w=1000&auto=format&fit=crop' },
 ];

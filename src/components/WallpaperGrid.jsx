@@ -47,6 +47,18 @@ function WallpaperGrid() {
                     'enies lobby', 'thriller bark', 'impel down', 'law', 'eustass', 'doflamingo',
                     'buggy', 'akainu', 'kizaru', 'aokiji', 'garp', 'sengoku', 'mihawk',
                     'boa hancock', 'crocodile', 'moria', 'cipher pol', 'reverie', 'poneglyph'
+                ],
+                2: [
+                    'wuthering waves', 'rover', 'jiyan', 'chixia', 'yinlin', 'lingyang',
+                    'jianxin', 'taoqi', 'sanhua', 'yuanwu', 'danjin', 'mortefi', 'verina',
+                    'zhezhi', 'calcharo', 'encore', 'baizhi', 'yangyang', 'aalto', 'jinhsi',
+                    'carlotta', 'camellya', 'xiangli yao', 'roccia', 'chisa', 'buling',
+                    'resonators', 'lament', 'echo', 'tacet discord', 'threnodian',
+                    'forte circuit', 'resonance skill', 'resonance liberation', 'intro skill',
+                    'outro skill', 'aero', 'glacio', 'electro', 'fusion', 'havoc', 'spectro',
+                    'astrites', 'lustrous tides', 'radiant tides', 'waveplate', 'union level',
+                    'sol-3', 'tacetite', 'jinzhou', 'huanglong', 'tacet field', 'pangu terminal',
+                    'shell credits', 'tower of adversity', 'tactical hologram', 'resonance chain'
                 ]
             };
 

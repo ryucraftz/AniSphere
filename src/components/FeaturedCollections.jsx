@@ -8,8 +8,8 @@ function FeaturedCollections() {
     const { setSelectedCollection, setSearchQuery } = useSearch();
 
     const handleCollectionClick = (collection) => {
-        // Only allow One Piece collection for now
-        if (collection.id === 1) {
+        // Allow One Piece and Wuthering Waves collections
+        if (collection.id === 1 || collection.id === 2) {
             setSelectedCollection(collection);
             setSearchQuery(''); // Clear search when selecting collection
             // Scroll to wallpapers section
@@ -36,13 +36,13 @@ function FeaturedCollections() {
                             borderRadius: '15px',
                             position: 'relative',
                             overflow: 'hidden',
-                            cursor: col.id === 1 ? 'pointer' : 'default',
+                            cursor: (col.id === 1 || col.id === 2) ? 'pointer' : 'default',
                             flexShrink: 0,
-                            opacity: col.id === 1 ? 1 : 0.7
+                            opacity: (col.id === 1 || col.id === 2) ? 1 : 0.7
                         }}
                     >
                         <img src={col.image} alt={col.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }} />
-                        {col.id !== 1 && (
+                        {(col.id !== 1 && col.id !== 2) && (
                             <div style={{
                                 position: 'absolute',
                                 top: '10px',
