@@ -29,6 +29,21 @@ function FeaturedCollections() {
                         <img src={col.image} alt={col.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }} />
                         <div style={{
                             position: 'absolute',
+                            top: '10px',
+                            right: '10px',
+                            background: 'rgba(255, 110, 199, 0.8)',
+                            color: '#fff',
+                            padding: '0.3rem 0.8rem',
+                            borderRadius: '20px',
+                            fontSize: '0.8rem',
+                            fontWeight: 'bold',
+                            backdropFilter: 'blur(5px)',
+                            boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+                        }}>
+                            Coming Soon
+                        </div>
+                        <div style={{
+                            position: 'absolute',
                             bottom: 0,
                             left: 0,
                             width: '100%',
