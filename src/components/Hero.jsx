@@ -51,7 +51,7 @@ function Hero() {
                         transition={{ duration: 0.8 }}
                         style={{
                             width: '100%',
-                            maxWidth: '500px',
+                            maxWidth: '350px',
                             height: 'auto',
                             borderRadius: '15px',
                             display: 'block',
