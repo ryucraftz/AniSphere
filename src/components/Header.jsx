@@ -91,54 +91,44 @@ function Header() {
             {/* Search Modal */}
             <AnimatePresence>
                 {isSearchOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        style={{
-                            position: 'fixed',
-                            top: '60px',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            width: '90%',
-                            maxWidth: '600px',
-                            background: 'var(--glass-bg)',
-                            backdropFilter: 'blur(10px)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '15px',
-                            padding: '1.5rem',
-                            zIndex: 101,
-                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
-                        }}
-                    >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <Search color="var(--primary-color)" size={24} />
-                            <input
-                                type="text"
-                                placeholder="Search wallpapers by name or filename..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                autoFocus
-                                style={{
-                                    flex: 1,
-                                    background: 'transparent',
-                                    border: 'none',
-                                    outline: 'none',
-                                    color: 'var(--text-color)',
-                                    fontSize: '1.1rem',
-                                    padding: '0.5rem 0'
-                                }}
-                            />
-                            {searchQuery && (
-                                <X
-                                    color="var(--text-muted)"
-                                    size={20}
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => setSearchQuery('')}
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setIsSearchOpen(false)}
+                            className="search-backdrop"
+                        />
+
+                        {/* Search Content */}
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            className="search-modal"
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <Search color="var(--primary-color)" size={24} />
+                                <input
+                                    type="text"
+                                    placeholder="Search wallpapers..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    autoFocus
+                                    className="search-input"
                                 />
-                            )}
-                        </div>
-                    </motion.div>
+                                {searchQuery && (
+                                    <X
+                                        color="var(--text-muted)"
+                                        size={24}
+                                        style={{ cursor: 'pointer', minWidth: '24px' }}
+                                        onClick={() => setSearchQuery('')}
+                                    />
+                                )}
+                            </div>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
 
@@ -153,6 +143,41 @@ function Header() {
           text-shadow: 0 0 5px var(--primary-color);
         }
         
+        /* Search Styles - Mobile First */
+        .search-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 101;
+        }
+        
+        .search-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg-color);
+            z-index: 102;
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            padding-top: 80px;
+        }
+        
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-color);
+            font-size: 16px;
+            padding: 0.75rem 0;
+        }
+        
         /* Mobile First Styles */
         .desktop-nav { display: none; }
         .mobile-toggle { display: block; }
@@ -165,6 +190,34 @@ function Header() {
           .mobile-toggle { display: none; }
           header { padding: 1rem 0; }
           .logo { font-size: 1.5rem !important; }
+          
+          /* Desktop Search Modal */
+          .search-backdrop {
+              background: transparent;
+              backdrop-filter: none;
+          }
+          
+          .search-modal {
+              top: 60px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 90%;
+              max-width: 600px;
+              height: auto;
+              background: var(--glass-bg);
+              backdrop-filter: blur(10px);
+              border: 1px solid var(--glass-border);
+              border-radius: 15px;
+              padding: 1.5rem;
+              box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+              align-items: center;
+              padding-top: 1.5rem;
+          }
+          
+          .search-input {
+              font-size: 1.1rem;
+              padding: 0.5rem 0;
+          }
         }
       `}</style>
         </header>
