@@ -57,7 +57,8 @@ function DetailModal({ wallpaper, onClose }) {
                         display: 'flex',
                         flexDirection: 'column',
                         position: 'relative',
-                        background: '#13141c'
+                        background: 'var(--bg-color)',
+                        color: 'var(--text-color)'
                     }}
                     onClick={e => e.stopPropagation()}
                 >
@@ -97,11 +98,11 @@ function DetailModal({ wallpaper, onClose }) {
                     <div className="modal-content" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '2rem' }}>
                         <div>
                             <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{wallpaper.title}</h2>
-                            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', color: '#ccc' }}>
+                            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', color: 'var(--text-muted)' }}>
                                 <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Tag size={16} /> Anime, Sci-Fi</span>
                                 <span>{wallpaper.width}x{wallpaper.height}</span>
                             </div>
-                            <p style={{ color: '#aaa', maxWidth: '600px' }}>
+                            <p style={{ color: 'var(--text-muted)', maxWidth: '600px' }}>
                                 High-quality immersive wallpaper featuring {wallpaper.title}. Optimized for desktop and mobile screens.
                             </p>
                         </div>

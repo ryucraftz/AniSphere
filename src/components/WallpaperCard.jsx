@@ -13,7 +13,7 @@ function WallpaperCard({ wallpaper, onClick }) {
                 position: 'relative',
                 cursor: 'pointer',
                 marginBottom: '20px',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                border: '1px solid var(--glass-border)',
                 boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
             }}
         >
