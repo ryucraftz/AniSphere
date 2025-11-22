@@ -5,19 +5,22 @@ import WallpaperGrid from './components/WallpaperGrid';
 import FeaturedCollections from './components/FeaturedCollections';
 import ThreeBackground from './components/ThreeBackground';
 import Footer from './components/Footer';
+import { SearchProvider } from './context/SearchContext';
 
 function App() {
   return (
-    <div className="app">
-      <ThreeBackground />
-      <Header />
-      <main>
-        <Hero />
-        <FeaturedCollections />
-        <WallpaperGrid />
-      </main>
-      <Footer />
-    </div>
+    <SearchProvider>
+      <div className="app">
+        <ThreeBackground />
+        <Header />
+        <main>
+          <Hero />
+          <FeaturedCollections />
+          <WallpaperGrid />
+        </main>
+        <Footer />
+      </div>
+    </SearchProvider>
   );
 }
 

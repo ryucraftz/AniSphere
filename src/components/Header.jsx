@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Menu, Search, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
+import { useSearch } from '../context/SearchContext';
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const { searchQuery, setSearchQuery } = useSearch();
 
     return (
         <header className="glass" style={{
@@ -30,7 +33,12 @@ function Header() {
                 </nav>
 
                 <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                    <Search color="var(--text-color)" size={20} style={{ cursor: 'pointer' }} />
+                    <Search
+                        color="var(--text-color)"
+                        size={20}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => setIsSearchOpen(!isSearchOpen)}
+                    />
                     <ThemeToggle />
                     <button
                         className="mobile-toggle"
@@ -76,6 +84,60 @@ function Header() {
                                 </li>
                             ))}
                         </ul>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Search Modal */}
+            <AnimatePresence>
+                {isSearchOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        style={{
+                            position: 'fixed',
+                            top: '60px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '90%',
+                            maxWidth: '600px',
+                            background: 'var(--glass-bg)',
+                            backdropFilter: 'blur(10px)',
+                            border: '1px solid var(--glass-border)',
+                            borderRadius: '15px',
+                            padding: '1.5rem',
+                            zIndex: 101,
+                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                        }}
+                    >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <Search color="var(--primary-color)" size={24} />
+                            <input
+                                type="text"
+                                placeholder="Search wallpapers by name or filename..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                autoFocus
+                                style={{
+                                    flex: 1,
+                                    background: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                    color: 'var(--text-color)',
+                                    fontSize: '1.1rem',
+                                    padding: '0.5rem 0'
+                                }}
+                            />
+                            {searchQuery && (
+                                <X
+                                    color="var(--text-muted)"
+                                    size={20}
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => setSearchQuery('')}
+                                />
+                            )}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
