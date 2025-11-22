@@ -42,7 +42,17 @@ function Header() {
                         <li className="nav-item"><a href="#">Home</a></li>
                         <li className="nav-item"><a href="#">Categories</a></li>
                         <li className="nav-item"><a href="#">3D Wallpapers</a></li>
-                        <li className="nav-item"><a href="#">Collections</a></li>
+                        <li className="nav-item">
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                            >
+                                Collections
+                            </a>
+                        </li>
                         <li className="nav-item"><a href="#">About</a></li>
                     </ul>
                 </nav>
@@ -91,7 +101,15 @@ function Header() {
                                 <li key={item} className="nav-item" style={{ width: '100%', textAlign: 'center' }}>
                                     <a
                                         href="#"
-                                        onClick={() => setIsMenuOpen(false)}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setIsMenuOpen(false);
+                                            if (item === 'Collections') {
+                                                setTimeout(() => {
+                                                    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+                                                }, 300);
+                                            }
+                                        }}
                                         style={{ fontSize: '1.5rem', display: 'block', padding: '1rem' }}
                                     >
                                         {item}

@@ -18,7 +18,7 @@ function FeaturedCollections() {
     };
 
     return (
-        <section className="container" style={{ padding: '4rem 20px', position: 'relative' }}>
+        <section id="collections" className="container" style={{ padding: '4rem 20px', position: 'relative' }}>
             <div style={{ position: 'absolute', right: 0, top: -50, width: '300px', height: '300px', zIndex: 0 }}>
                 <ScrollScene />
             </div>
