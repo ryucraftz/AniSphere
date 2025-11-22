@@ -43,6 +43,14 @@ function Hero() {
         <section style={{ height: '90vh', position: 'relative', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
             <div className="container" style={{ position: 'relative', zIndex: 10, display: 'flex', width: '100%', alignItems: 'center' }}>
                 <div style={{ flex: 1 }}>
+                    <motion.img
+                        src="https://i.giphy.com/Tgvn82bqJT36lkVqDZ.webp"
+                        alt="Anime Eye"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8 }}
+                        style={{ width: '100px', marginBottom: '1rem', borderRadius: '10px' }}
+                    />
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}

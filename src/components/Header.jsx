@@ -11,9 +11,10 @@ function Header() {
             position: 'sticky',
             top: 0,
             zIndex: 100,
-            padding: '1rem 0'
+            zIndex: 100,
+            padding: '0.5rem 0'
         }}>
-            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap' }}>
                 <div className="logo" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
                     AniSphere
                 </div>
