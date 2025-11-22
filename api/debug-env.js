@@ -1,20 +1,40 @@
-// Simple debug endpoint to see raw environment variable
+// Ultra-safe debug endpoint with comprehensive error handling
 module.exports = async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', 'application/json');
+    try {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Content-Type', 'application/json');
 
-    const hasKey = !!process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-    const hasFolderId = !!process.env.GOOGLE_DRIVE_FOLDER_ID;
-    const keyLength = process.env.GOOGLE_SERVICE_ACCOUNT_KEY?.length || 0;
-    const first200 = process.env.GOOGLE_SERVICE_ACCOUNT_KEY?.substring(0, 200) || 'NOT SET';
-    const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID || 'NOT SET';
+        const result = {
+            timestamp: new Date().toISOString(),
+            hasKey: false,
+            hasFolderId: false,
+            keyLength: 0,
+            first200: 'NOT SET',
+            folderId: 'NOT SET',
+            errors: []
+        };
 
-    res.status(200).json({
-        hasKey,
-        hasFolderId,
-        keyLength,
-        first200,
-        folderId,
-        note: 'Check first200 to see what the key starts with'
-    });
+        try {
+            result.hasKey = !!process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+            result.keyLength = process.env.GOOGLE_SERVICE_ACCOUNT_KEY?.length || 0;
+            result.first200 = process.env.GOOGLE_SERVICE_ACCOUNT_KEY?.substring(0, 200) || 'NOT SET';
+        } catch (e) {
+            result.errors.push(`Key error: ${e.message}`);
+        }
+
+        try {
+            result.hasFolderId = !!process.env.GOOGLE_DRIVE_FOLDER_ID;
+            result.folderId = process.env.GOOGLE_DRIVE_FOLDER_ID || 'NOT SET';
+        } catch (e) {
+            result.errors.push(`Folder ID error: ${e.message}`);
+        }
+
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(200).json({
+            error: 'Function crashed',
+            message: error.message,
+            stack: error.stack
+        });
+    }
 };
