@@ -30,7 +30,7 @@ function WallpaperGrid() {
     if (error) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'red' }}>Error: {error}</div>;
 
     return (
-        <section className="container" style={{ padding: '4rem 20px' }}>
+        <section id="trending" className="container" style={{ padding: '4rem 20px' }}>
             <h2 className="neon-text" style={{ fontSize: '2rem', marginBottom: '2rem' }}>Trending Wallpapers</h2>
 
             <FilterBar />

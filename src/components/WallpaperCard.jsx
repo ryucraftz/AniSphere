@@ -8,11 +8,13 @@ function WallpaperCard({ wallpaper, onClick }) {
             whileHover={{ y: -10, scale: 1.02 }}
             onClick={() => onClick && onClick(wallpaper)}
             style={{
-                borderRadius: '10px',
+                borderRadius: '15px',
                 overflow: 'hidden',
                 position: 'relative',
                 cursor: 'pointer',
-                marginBottom: '20px'
+                marginBottom: '20px',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
             }}
         >
             <div style={{ position: 'relative', paddingBottom: '150%' /* Aspect ratio */ }}>
@@ -38,9 +40,10 @@ function WallpaperCard({ wallpaper, onClick }) {
                     left: 0,
                     width: '100%',
                     padding: '1rem',
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
                     opacity: 0,
-                    transition: 'opacity 0.3s'
+                    transition: 'all 0.3s ease-in-out',
+                    backdropFilter: 'blur(2px)'
                 }}>
                     <h3 style={{ fontSize: '1.1rem', marginBottom: '0.2rem' }}>{wallpaper.title}</h3>
                     <p style={{ fontSize: '0.9rem', color: '#ccc' }}>{wallpaper.resolution}</p>
@@ -52,6 +55,10 @@ function WallpaperCard({ wallpaper, onClick }) {
         }
         .wallpaper-card:hover img {
           transform: scale(1.1);
+        }
+        .wallpaper-card:hover {
+            box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.3) !important;
+            border-color: var(--primary-color) !important;
         }
       `}</style>
         </motion.div>

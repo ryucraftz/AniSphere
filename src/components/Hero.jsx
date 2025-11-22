@@ -39,6 +39,13 @@ function Loader() {
 }
 
 function Hero() {
+    const scrollToTrending = () => {
+        const element = document.getElementById('trending');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <section style={{ height: '90vh', position: 'relative', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
             <div className="container" style={{ position: 'relative', zIndex: 10, display: 'flex', width: '100%', alignItems: 'center' }}>
@@ -55,8 +62,7 @@ function Hero() {
                             height: 'auto',
                             borderRadius: '15px',
                             display: 'block',
-                            margin: '0 auto 1.5rem auto',
-                            boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                            margin: '0 auto 1.5rem auto'
                         }}
                     />
                     <motion.h1
@@ -93,6 +99,7 @@ function Hero() {
                         }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={scrollToTrending}
                     >
                         Explore Wallpapers
                     </motion.button>
