@@ -91,7 +91,7 @@ function DetailModal({ wallpaper, onClose }) {
                         />
                     </div>
 
-                    <div style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '2rem' }}>
+                    <div className="modal-content" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '2rem' }}>
                         <div>
                             <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{wallpaper.title}</h2>
                             <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', color: '#ccc' }}>
@@ -105,7 +105,7 @@ function DetailModal({ wallpaper, onClose }) {
 
                         <button
                             onClick={handleDownload}
-                            className="neon-box"
+                            className="neon-box download-btn"
                             style={{
                                 padding: '1rem 2rem',
                                 background: 'var(--primary-color)',
@@ -123,6 +123,20 @@ function DetailModal({ wallpaper, onClose }) {
                             <Download size={20} /> Download
                         </button>
                     </div>
+                    <style>{`
+                        @media (max-width: 768px) {
+                            .modal-content {
+                                flex-direction: column;
+                                padding: 1.5rem !important;
+                                gap: 1.5rem !important;
+                            }
+                            .download-btn {
+                                width: 100%;
+                                justify-content: center;
+                            }
+                            h2 { font-size: 1.5rem !important; }
+                        }
+                    `}</style>
                 </motion.div>
             </motion.div>
         </AnimatePresence>

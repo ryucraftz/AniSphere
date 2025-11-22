@@ -76,6 +76,9 @@ function Header() {
         @media (max-width: 768px) {
           .desktop-nav { display: none; }
           .mobile-toggle { display: block; }
+          header { padding: 0.8rem 0 !important; }
+          .logo { font-size: 1.3rem !important; }
+          .container { padding: 0 1.5rem; }
         }
       `}</style>
         </header>

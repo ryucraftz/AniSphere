@@ -85,19 +85,109 @@ function Hero() {
                     <Canvas>
                         <Suspense fallback={<Loader />}>
                             <ambientLight intensity={0.5} />
-                            <pointLight position={[10, 10, 10]} />
-                            <Hero3DElement />
-                        </Suspense>
-                    </Canvas>
-                </div>
-            </div>
-            <style>{`
-        @media (max-width: 768px) {
-           /* Hide the side 3D element on mobile to save space/performance */
+                            import React, {useRef, Suspense} from 'react';
+                            import {Canvas, useFrame} from '@react-three/fiber';
+                            import {TorusKnot, Float, MeshDistortMaterial, Html} from '@react-three/drei';
+                            import {motion} from 'framer-motion';
+
+                            function Hero3DElement() {
+    const meshRef = useRef();
+
+    useFrame((state) => {
+        if (meshRef.current) {
+                                // Basic rotation
+                                meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.2;
+                            meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.3;
+
+                            // Mouse interaction (parallax)
+                            const {x, y} = state.pointer;
+                            meshRef.current.rotation.x += y * 0.5;
+                            meshRef.current.rotation.y += x * 0.5;
         }
-      `}</style>
-        </section>
-    );
+    });
+
+                            return (
+                            <Float speed={2} rotationIntensity={1} floatIntensity={2}>
+                                <TorusKnot
+                                    ref={meshRef}
+                                    args={[1, 0.3, 128, 16]}
+                                    position={[2, 0, 0]}
+                                    onClick={() => meshRef.current.scale.setScalar(1.2)}
+                                    onPointerOut={() => meshRef.current.scale.setScalar(1)}
+                                >
+                                    <MeshDistortMaterial color="#25f4ee" attach="material" distort={0.3} speed={2} roughness={0.2} metalness={0.8} />
+                                </TorusKnot>
+                            </Float>
+                            );
 }
 
-export default Hero;
+                            function Loader() {
+    return <Html center><div style={{ color: 'white' }}>Loading 3D...</div></Html>;
+}
+
+                            function Hero() {
+    return (
+                            <section style={{ height: '90vh', position: 'relative', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+                                <div className="container" style={{ position: 'relative', zIndex: 10, display: 'flex', width: '100%', alignItems: 'center' }}>
+                                    <div style={{ flex: 1 }}>
+                                        <motion.h1
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.8 }}
+                                            style={{ fontSize: '4rem', fontWeight: 'bold', lineHeight: 1.1, marginBottom: '1rem' }}
+                                        >
+                                            Discover <span className="gradient-text">Immersive</span> <br /> Anime Worlds
+                                        </motion.h1>
+                                        <motion.p
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.8, delay: 0.2 }}
+                                            style={{ fontSize: '1.2rem', color: '#ccc', marginBottom: '2rem', maxWidth: '500px' }}
+                                        >
+                                            Download high-resolution wallpapers with cinematic depth and 3D detail.
+                                        </motion.p>
+                                        <motion.button
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{ duration: 0.5, delay: 0.4 }}
+                                            className="neon-box"
+                                            style={{
+                                                padding: '1rem 2rem',
+                                                fontSize: '1.1rem',
+                                                background: 'var(--primary-color)',
+                                                color: '#000',
+                                                border: 'none',
+                                                borderRadius: '5px',
+                                                fontWeight: 'bold',
+                                                cursor: 'pointer',
+                                                transition: 'transform 0.2s'
+                                            }}
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            Explore Wallpapers
+                                        </motion.button>
+                                    </div>
+                                    <div style={{ flex: 1, height: '500px', display: 'none', '@media (min-width: 768px)': { display: 'block' } }}>
+                                        <Canvas>
+                                            <Suspense fallback={<Loader />}>
+                                                <ambientLight intensity={0.5} />
+                                                <pointLight position={[10, 10, 10]} />
+                                                <Hero3DElement />
+                                            </Suspense>
+                                        </Canvas>
+                                    </div>
+                                </div>
+                                <style>{`
+        @media (max-width: 768px) {
+           .container { flex-direction: column; text-align: center; padding-top: 2rem; }
+           h1 { font-size: 2.5rem !important; }
+           p { font-size: 1rem !important; margin: 0 auto 2rem !important; }
+           .hero-3d-container { display: none !important; }
+        }
+      `}</style>
+                            </section>
+                            );
+}
+
+                            export default Hero;

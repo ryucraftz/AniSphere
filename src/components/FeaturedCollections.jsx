@@ -10,11 +10,11 @@ function FeaturedCollections() {
                 <ScrollScene />
             </div>
             <h2 className="neon-text" style={{ fontSize: '2rem', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>Featured Collections</h2>
-            <div style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', position: 'relative', zIndex: 1 }}>
+            <div className="collections-scroll" style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', position: 'relative', zIndex: 1 }}>
                 {COLLECTIONS.map(col => (
                     <motion.div
                         key={col.id}
-                        className="glass"
+                        className="glass collection-card"
                         whileHover={{ scale: 1.05 }}
                         style={{
                             minWidth: '300px',
@@ -40,6 +40,24 @@ function FeaturedCollections() {
                     </motion.div>
                 ))}
             </div>
+            <style>{`
+                /* Hide scrollbar for Chrome, Safari and Opera */
+                .collections-scroll::-webkit-scrollbar {
+                    display: none;
+                }
+                /* Hide scrollbar for IE, Edge and Firefox */
+                .collections-scroll {
+                    -ms-overflow-style: none;  /* IE and Edge */
+                    scrollbar-width: none;  /* Firefox */
+                }
+                @media (max-width: 768px) {
+                    .collection-card {
+                        min-width: 250px !important;
+                        height: 160px !important;
+                    }
+                    .container { padding: 2rem 15px !important; }
+                }
+            `}</style>
         </section>
     );
 }

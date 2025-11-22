@@ -35,15 +35,25 @@ function WallpaperGrid() {
 
             <FilterBar />
 
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-                gap: '20px'
-            }}>
+            <div className="wallpaper-grid">
                 {wallpapers.map(wp => (
                     <WallpaperCard key={wp.id} wallpaper={wp} onClick={setSelectedWallpaper} />
                 ))}
             </div>
+            <style>{`
+                .wallpaper-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 20px;
+                }
+                @media (max-width: 768px) {
+                    .wallpaper-grid {
+                        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Smaller cards on mobile */
+                        gap: 15px;
+                    }
+                    .container { padding: 2rem 15px !important; }
+                }
+            `}</style>
 
             <DetailModal wallpaper={selectedWallpaper} onClose={() => setSelectedWallpaper(null)} />
         </section>
