@@ -65,16 +65,32 @@ function Footer() {
         }
         
         /* Mobile First Styles */
-        .container > div:first-child {
+        footer > div > div:first-child {
             flex-direction: column;
             gap: 2rem;
+        }
+        
+        footer > div > div:first-child > div {
+            text-align: center;
+        }
+        
+        footer > div > div:first-child > div > div {
+            justify-content: center;
         }
 
         /* Desktop Styles */
         @media (min-width: 768px) {
-            .container > div:first-child {
+            footer > div > div:first-child {
                 flex-direction: row;
                 gap: 2rem;
+            }
+            
+            footer > div > div:first-child > div {
+                text-align: left;
+            }
+            
+            footer > div > div:first-child > div > div {
+                justify-content: flex-start;
             }
         }
       `}</style>
