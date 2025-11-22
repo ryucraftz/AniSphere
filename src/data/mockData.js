@@ -8,9 +8,9 @@ export const WALLPAPERS = [
 ];
 
 export const COLLECTIONS = [
-    { id: 1, title: 'One Piece', color: '#ff0', image: 'https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=1000&auto=format&fit=crop' },
-    { id: 2, title: 'Studio Ghibli', color: '#0f0', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop' },
-    { id: 3, title: 'Dark Anime', color: '#f0f', image: 'https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?q=80&w=1000&auto=format&fit=crop' },
-    { id: 4, title: 'Mecha', color: '#0ff', image: 'https://images.unsplash.com/photo-1614726365723-49cfae987c94?q=80&w=1000&auto=format&fit=crop' },
-    { id: 5, title: 'Scenery', color: '#0ff', image: 'https://images.unsplash.com/photo-1534067783741-51417aa4e0a9?q=80&w=1000&auto=format&fit=crop' },
+    { id: 1, title: 'One Piece', color: '#ff0', image: 'https://static.wikia.nocookie.net/onepiece/images/8/87/One_Piece_Anime_Logo.png/revision/latest?cb=20250813015436?q=80&w=1000&auto=format&fit=crop' },
+    { id: 2, title: 'Studio Ghibli', color: '#0f0', image: 'https://amherstwire.com/wp-content/uploads/2021/02/my_neighbor_totoro_hero-900x507.jpg?q=80&w=1000&auto=format&fit=crop' },
+    { id: 3, title: 'Dark Anime', color: '#f0f', image: 'https://4kwallpapers.com/images/walls/thumbs/19127.jpg?q=80&w=1000&auto=format&fit=crop' },
+    { id: 4, title: 'Mecha', color: '#0ff', image: 'https://images2.alphacoders.com/710/710961.png?q=80&w=1000&auto=format&fit=crop' },
+    { id: 5, title: 'Scenery', color: '#0ff', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlcm9X3yCjuqbeeyxPjAhDK8NLVRzfuy4rA&s?q=80&w=1000&auto=format&fit=crop' },
 ];
