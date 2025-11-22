@@ -56,13 +56,13 @@ function Hero() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8 }}
+                        className="hero-gif"
                         style={{
                             width: '100%',
                             maxWidth: '350px',
                             height: 'auto',
                             borderRadius: '15px',
-                            display: 'block',
-                            margin: '0 auto 1.5rem auto'
+                            display: 'block'
                         }}
                     />
                     <motion.h1
@@ -119,6 +119,7 @@ function Hero() {
         .container { flex-direction: column; text-align: center; padding-top: 3rem; }
         h1 { font-size: clamp(2.2rem, 5vw, 4rem) !important; line-height: 1.2 !important; }
         p { font-size: clamp(1rem, 2vw, 1.2rem) !important; margin: 0 auto 2rem !important; padding: 0 1rem; }
+        .hero-gif { margin: 0 auto 1.5rem auto; }
         .hero-3d-container { display: none !important; }
 
         /* Desktop Styles */
@@ -127,9 +128,10 @@ function Hero() {
             h1 { line-height: 1.1 !important; }
             p { margin: 0 0 2rem !important; padding: 0; }
             .hero-3d-container { display: block !important; }
+            .hero-gif { margin: -2rem 0 1.5rem 0; }
         }
       `}</style>
-        </section>
+        </section >
     );
 }
 
