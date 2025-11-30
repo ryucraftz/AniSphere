@@ -1,6 +1,4 @@
 import React, { useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { TorusKnot, Float, MeshDistortMaterial, Html } from '@react-three/drei';
 import { motion } from 'framer-motion';
 
 function Hero3DElement() {
@@ -104,15 +102,6 @@ function Hero() {
                         Explore Wallpapers
                     </motion.button>
                 </div>
-                <div className="hero-3d-container" style={{ flex: 1, height: '500px', display: 'none', '@media (min-width: 768px)': { display: 'block' } }}>
-                    <Canvas>
-                        <Suspense fallback={<Loader />}>
-                            <ambientLight intensity={0.5} />
-                            <pointLight position={[10, 10, 10]} />
-                            <Hero3DElement />
-                        </Suspense>
-                    </Canvas>
-                </div>
             </div>
             <style>{`
         /* Mobile First Styles */
@@ -120,14 +109,12 @@ function Hero() {
         h1 { font-size: clamp(2.2rem, 5vw, 4rem) !important; line-height: 1.2 !important; }
         p { font-size: clamp(1rem, 2vw, 1.2rem) !important; margin: 0 auto 2rem !important; padding: 0 1rem; }
         .hero-gif { margin: 0 auto 1.5rem auto; }
-        .hero-3d-container { display: none !important; }
 
         /* Desktop Styles */
         @media (min-width: 768px) {
             .container { flex-direction: row; text-align: left; padding-top: 0; }
             h1 { line-height: 1.1 !important; }
             p { margin: 0 0 2rem !important; padding: 0; }
-            .hero-3d-container { display: block !important; }
             .hero-gif { margin: -2rem 0 1.5rem 0; }
         }
       `}</style>
