@@ -110,22 +110,6 @@ ul {
 .prevent-download {
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
-  pointer-events: none;
-}
-
-.neon-text {
-  text-shadow: 0 0 20px rgba(37, 244, 238, 0.6);
-  -webkit-text-fill-color: transparent;
-  animation: shine 5s linear infinite;
-}
-
-@keyframes shine {
-  to {
-    background-position: 200% center;
-  }
 }
 
 /* Buttons */

@@ -89,8 +89,6 @@ function Hero() {
                             maxWidth: '450px',
                             height: 'auto',
                             borderRadius: '20px',
-                            boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
-                            border: '1px solid var(--glass-border)',
                             zIndex: 1
                         }}
                         whileHover={{ scale: 1.02, rotate: 2 }}
