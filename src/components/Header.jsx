@@ -38,8 +38,8 @@ function Header() {
             padding: '0.3rem 0'
         }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap', width: '100%', padding: '0 1rem' }}>
-                <div className="logo" style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
-                    AniSphere
+                <div className="logo neon-text" style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '1px', color: 'var(--primary-color)' }}>
+                    ANI<span style={{ color: 'var(--text-color)' }}>SPHERE</span>
                 </div>
 
                 {/* Desktop Nav */}
@@ -102,7 +102,8 @@ function Header() {
                             left: 0,
                             width: '100%',
                             height: '100vh',
-                            background: '#0b0c11',
+                            background: 'rgba(11, 12, 17, 0.95)',
+                            backdropFilter: 'blur(20px)',
                             zIndex: 99,
                             paddingTop: '80px',
                             display: 'flex',

@@ -4,17 +4,14 @@ import { motion } from 'framer-motion';
 function WallpaperCard({ wallpaper, onClick }) {
     return (
         <motion.div
-            className="wallpaper-card glass"
+            className="wallpaper-card glass-card"
             whileHover={{ y: -10, scale: 1.02 }}
             onClick={() => onClick && onClick(wallpaper)}
             style={{
-                borderRadius: '15px',
                 overflow: 'hidden',
                 position: 'relative',
                 cursor: 'pointer',
                 marginBottom: '20px',
-                border: '1px solid var(--glass-border)',
-                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
             }}
         >
             <div style={{ position: 'relative', paddingBottom: '150%' /* Aspect ratio */ }}>
