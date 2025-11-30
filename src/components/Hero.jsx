@@ -1,49 +1,5 @@
-import React, { useRef, Suspense } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, TorusKnot, MeshDistortMaterial, Html, Environment, OrbitControls } from '@react-three/drei';
-
-function Hero3DElement() {
-    const meshRef = useRef();
-
-    useFrame((state) => {
-        if (meshRef.current) {
-            // Basic rotation
-            meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.2;
-            meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.3;
-
-            // Mouse interaction (parallax)
-            const { x, y } = state.pointer;
-            meshRef.current.rotation.x += y * 0.2;
-            meshRef.current.rotation.y += x * 0.2;
-        }
-    });
-
-    return (
-        <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-            <TorusKnot
-                ref={meshRef}
-                args={[1, 0.3, 128, 16]}
-                position={[0, 0, 0]}
-                onClick={() => meshRef.current.scale.setScalar(1.2)}
-                onPointerOut={() => meshRef.current.scale.setScalar(1)}
-            >
-                <MeshDistortMaterial 
-                    color="#25f4ee" 
-                    attach="material" 
-                    distort={0.4} 
-                    speed={2} 
-                    roughness={0.1} 
-                    metalness={0.9} 
-                />
-            </TorusKnot>
-        </Float>
-    );
-}
-
-function Loader() {
-    return <Html center><div style={{ color: 'white' }}>Loading 3D...</div></Html>;
-}
 
 function Hero() {
     const scrollToTrending = () => {
@@ -56,7 +12,7 @@ function Hero() {
     return (
         <section style={{ minHeight: '90vh', position: 'relative', display: 'flex', alignItems: 'center', overflow: 'hidden', paddingTop: '80px' }}>
             <div className="container" style={{ position: 'relative', zIndex: 10, display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                
+
                 {/* Text Content */}
                 <div style={{ flex: 1, maxWidth: '600px' }}>
                     <motion.div
@@ -77,7 +33,7 @@ function Hero() {
                         >
                             Experience anime like never before with our curated collection of high-resolution, cinematic, and 3D wallpapers.
                         </p>
-                        
+
                         <div style={{ display: 'flex', gap: '1rem' }}>
                             <motion.button
                                 className="btn-primary"
@@ -107,9 +63,9 @@ function Hero() {
                     </motion.div>
                 </div>
 
-                {/* 3D Element */}
-                <div className="hero-3d" style={{ flex: 1, height: '600px', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
-                     {/* Fallback/Background Glow */}
+                {/* Hero Image (GIF) */}
+                <div className="hero-image" style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+                    {/* Background Glow */}
                     <div style={{
                         position: 'absolute',
                         top: '50%',
@@ -121,17 +77,24 @@ function Hero() {
                         zIndex: -1,
                         filter: 'blur(50px)'
                     }} />
-                    
-                    <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-                        <Suspense fallback={<Loader />}>
-                            <ambientLight intensity={0.5} />
-                            <pointLight position={[10, 10, 10]} intensity={1} color="#25f4ee" />
-                            <pointLight position={[-10, -10, -10]} intensity={0.5} color="#ff6ec7" />
-                            <Hero3DElement />
-                            <Environment preset="city" />
-                            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-                        </Suspense>
-                    </Canvas>
+
+                    <motion.img
+                        src="https://i.giphy.com/Tgvn82bqJT36lkVqDZ.webp"
+                        alt="One Piece Luffy"
+                        initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        transition={{ duration: 0.8 }}
+                        style={{
+                            width: '100%',
+                            maxWidth: '450px',
+                            height: 'auto',
+                            borderRadius: '20px',
+                            boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+                            border: '1px solid var(--glass-border)',
+                            zIndex: 1
+                        }}
+                        whileHover={{ scale: 1.02, rotate: 2 }}
+                    />
                 </div>
             </div>
 
@@ -142,8 +105,8 @@ function Hero() {
                 flex-direction: column-reverse !important;
                 text-align: center;
             }
-            .hero-3d {
-                height: 350px !important;
+            .hero-image {
+                margin-bottom: 2rem;
                 width: 100%;
             }
             h1 {
