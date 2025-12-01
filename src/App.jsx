@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import ErrorBoundary from './components/ErrorBoundary';
 import { SearchProvider } from './context/SearchContext';
 
 // Lazy load heavy components
@@ -31,39 +32,41 @@ function App() {
   const [currentView, setCurrentView] = React.useState('home');
 
   return (
-    <SearchProvider>
-      <div className="app">
-        <Helmet>
-          <title>AniSphere - Anime Wallpapers</title>
-          <meta name="description" content="Discover and download high-quality anime wallpapers. AniSphere offers a vast collection of stunning anime backgrounds for your devices." />
-        </Helmet>
-        <Suspense fallback={<div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, background: 'var(--bg-color)' }} />}>
-          <ThreeBackground />
-        </Suspense>
-        <Header onNavigate={setCurrentView} />
-        <main>
-          {currentView === 'home' ? (
-            <>
-              <Hero />
+    <ErrorBoundary>
+      <SearchProvider>
+        <div className="app">
+          <Helmet>
+            <title>AniSphere - Anime Wallpapers</title>
+            <meta name="description" content="Discover and download high-quality anime wallpapers. AniSphere offers a vast collection of stunning anime backgrounds for your devices." />
+          </Helmet>
+          <Suspense fallback={<div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, background: 'var(--bg-color)' }} />}>
+            <ThreeBackground />
+          </Suspense>
+          <Header onNavigate={setCurrentView} />
+          <main>
+            {currentView === 'home' ? (
+              <>
+                <Hero />
+                <Suspense fallback={<PageLoader />}>
+                  <FeaturedCollections />
+                  <WallpaperGrid />
+                </Suspense>
+              </>
+            ) : currentView === 'favorites' ? (
               <Suspense fallback={<PageLoader />}>
-                <FeaturedCollections />
-                <WallpaperGrid />
+                <Favorites />
               </Suspense>
-            </>
-          ) : currentView === 'favorites' ? (
-            <Suspense fallback={<PageLoader />}>
-              <Favorites />
-            </Suspense>
-          ) : currentView === 'desktop' ? (
-            <Suspense fallback={<PageLoader />}>
-              <Desktop />
-            </Suspense>
-          ) : null}
-        </main>
-        <ScrollToTop />
-        <Footer />
-      </div>
-    </SearchProvider>
+            ) : currentView === 'desktop' ? (
+              <Suspense fallback={<PageLoader />}>
+                <Desktop />
+              </Suspense>
+            ) : null}
+          </main>
+          <ScrollToTop />
+          <Footer />
+        </div>
+      </SearchProvider>
+    </ErrorBoundary>
   );
 }
 
