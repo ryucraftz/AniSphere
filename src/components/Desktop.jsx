@@ -18,50 +18,20 @@ function Desktop() {
         setError(null);
 
         try {
-            const response = await fetch('/api/wallpapers');
+            // Fetch from Google Drive folder API
+            const response = await fetch('/api/drive-folder');
             const data = await response.json();
             setWallpapers(data);
         } catch (err) {
-            console.error('Error fetching wallpapers:', err);
+            console.error('Error fetching Desktop wallpapers:', err);
             setError(err.message);
         } finally {
             setLoading(false);
         }
     };
 
-    // Filter wallpapers by aspect ratio (landscape for desktop)
-    const desktopWallpapers = useMemo(() => {
-        const filtered = wallpapers.filter(wp => {
-            // First check: exclude based on title keywords
-            const title = wp.title?.toLowerCase() || '';
-            if (title.includes('mobile') || title.includes('phone') || title.includes('vertical') || title.includes('portrait')) {
-                return false;
-            }
-
-            // Second check: if resolution data exists, use it
-            if (wp.resolution && wp.resolution !== 'Unknown' && wp.resolution.includes('x')) {
-                const parts = wp.resolution.toLowerCase().split('x');
-                if (parts.length === 2) {
-                    const width = parseInt(parts[0].trim());
-                    const height = parseInt(parts[1].trim());
-                    if (!isNaN(width) && !isNaN(height) && height > 0) {
-                        const aspectRatio = width / height;
-                        // Desktop wallpapers: landscape (aspect ratio > 1)
-                        // Typically 16:9 (1.78), 16:10 (1.6), 21:9 (2.33)
-                        // Exclude portrait: 9:16 (0.56), 10:16 (0.625)
-                        return aspectRatio > 1.0;
-                    }
-                }
-            }
-
-            // If no resolution data, default to EXCLUDE to be safe
-            // This prevents showing unknown aspect ratio images
-            return false;
-        });
-
-        console.log(`Desktop filter: ${filtered.length} of ${wallpapers.length} wallpapers (landscape only)`);
-        return filtered;
-    }, [wallpapers]);
+    // No filtering needed - folder is already curated for desktop wallpapers
+    const desktopWallpapers = wallpapers;
 
     if (loading) {
         return (
