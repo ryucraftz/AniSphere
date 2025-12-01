@@ -4,7 +4,6 @@ import FilterBar from './FilterBar';
 import DetailModal from './DetailModal';
 import { useSearch } from '../context/SearchContext';
 import { X } from 'lucide-react';
-
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 function WallpaperGrid() {
@@ -107,13 +106,13 @@ function WallpaperGrid() {
 
     const sentinelRef = useInfiniteScroll(loadMore);
 
-    if (loading) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-color)' }}>Loading wallpapers...</div>;
-    if (error) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'red' }}>Error: {error}</div>;
+    if (loading) return <div className="container wallpaper-grid-loading">Loading wallpapers...</div>;
+    if (error) return <div className="container wallpaper-grid-error">Error: {error}</div>;
 
     return (
-        <section id="trending" className="container" style={{ padding: '4rem 20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
-                <h2 className="neon-text" style={{ fontSize: '2rem', margin: 0 }}>
+        <section id="trending" className="container wallpaper-grid-section">
+            <div className="wallpaper-grid-header">
+                <h2 className="neon-text wallpaper-grid-title">
                     {selectedCollection
                         ? `${selectedCollection.title} Collection`
                         : searchQuery
@@ -122,24 +121,7 @@ function WallpaperGrid() {
                     }
                 </h2>
                 {(selectedCollection || searchQuery) && (
-                    <button
-                        onClick={clearFilters}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.5rem',
-                            background: 'var(--glass-bg)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '8px',
-                            padding: '0.5rem 1rem',
-                            color: 'var(--text-color)',
-                            cursor: 'pointer',
-                            fontSize: '0.9rem',
-                            transition: 'all 0.3s'
-                        }}
-                        onMouseEnter={(e) => e.target.style.background = 'var(--primary-color)'}
-                        onMouseLeave={(e) => e.target.style.background = 'var(--glass-bg)'}
-                    >
+                    <button onClick={clearFilters} className="clear-filter-btn">
                         <X size={16} />
                         Clear Filter
                     </button>
@@ -149,13 +131,9 @@ function WallpaperGrid() {
             <FilterBar />
 
             {visibleWallpapers.length === 0 ? (
-                <div style={{
-                    textAlign: 'center',
-                    padding: '4rem 2rem',
-                    color: 'var(--text-muted)'
-                }}>
+                <div className="wallpaper-grid-empty">
                     <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>No wallpapers found</p>
-                    <p style={{ fontSize: '1rem' }}>Try a different search term or collection</p>
+                    <p>Try a different search term or collection</p>
                 </div>
             ) : (
                 <>
@@ -165,30 +143,12 @@ function WallpaperGrid() {
                         ))}
                     </div>
                     {visibleWallpapers.length < filteredWallpapers.length && (
-                        <div ref={sentinelRef} style={{ height: '20px', margin: '20px 0', textAlign: 'center', color: 'var(--text-muted)' }}>
+                        <div ref={sentinelRef} className="infinite-scroll-sentinel">
                             Loading more...
                         </div>
                     )}
                 </>
             )}
-            <style>{`
-                /* Mobile First Grid */
-                .wallpaper-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
-                    gap: 12px;
-                }
-                .container { padding: 2rem 12px; }
-
-                /* Desktop Styles */
-                @media (min-width: 768px) {
-                    .wallpaper-grid {
-                        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                        gap: 20px;
-                    }
-                    .container { padding: 4rem 20px; }
-                }
-            `}</style>
 
             <DetailModal wallpaper={selectedWallpaper} onClose={() => setSelectedWallpaper(null)} />
         </section>
