@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart } from 'lucide-react';
+import { Heart, Download } from 'lucide-react';
 import { useFavorites } from '../context/FavoritesContext';
+import { downloadImage } from '../utils/downloadUtils';
 
 function WallpaperCard({ wallpaper, onClick }) {
     const [isLoading, setIsLoading] = React.useState(true);
@@ -71,32 +72,6 @@ function WallpaperCard({ wallpaper, onClick }) {
                         border: 'none',
                         borderRadius: '50%',
                         width: '35px',
-                        height: '35px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        cursor: 'pointer',
-                        zIndex: 3,
-                        cursor: 'pointer',
-                        zIndex: 3,
-                        transition: 'all 0.3s ease',
-                        opacity: 1,
-                        transform: 'scale(1)',
-                    }}
-                >
-                    <Heart
-                        size={20}
-                        color={favorite ? '#fe2c55' : '#fff'}
-                        fill={favorite ? '#fe2c55' : 'none'}
-                    />
-                </button>
-
-                <div className="overlay" style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    width: '100%',
-                    padding: '1rem',
                     background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
                     opacity: 0,
                     transition: 'all 0.3s ease-in-out',
@@ -115,7 +90,7 @@ function WallpaperCard({ wallpaper, onClick }) {
         .wallpaper-card:hover .overlay {
           opacity: 1;
         }
-        .favorite-btn:hover {
+        .favorite-btn:hover, .download-btn-card:hover {
             background: rgba(255, 255, 255, 0.2) !important;
             transform: scale(1.1);
         }
@@ -127,7 +102,7 @@ function WallpaperCard({ wallpaper, onClick }) {
             border-color: var(--primary-color) !important;
         }
       `}</style>
-        </motion.div>
+        </motion.div >
     );
 }
 

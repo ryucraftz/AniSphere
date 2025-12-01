@@ -2,23 +2,16 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Download, Tag } from 'lucide-react';
 
+import { downloadImage } from '../utils/downloadUtils';
+
 function DetailModal({ wallpaper, onClose }) {
     if (!wallpaper) return null;
 
     const handleDownload = async () => {
         try {
-            const response = await fetch(wallpaper.image);
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${wallpaper.title}.png`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
+            await downloadImage(wallpaper.image, `${wallpaper.title}.png`);
         } catch (error) {
-            console.error('Download failed:', error);
+            // Error handling is already logged in the utility, but we could add UI feedback here
         }
     };
 
