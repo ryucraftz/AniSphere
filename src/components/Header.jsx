@@ -56,7 +56,7 @@ function Header({ onNavigate }) {
                     style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem', fontWeight: 800, letterSpacing: '1px', color: 'var(--primary-color)', cursor: 'pointer' }}
                     onClick={() => handleNavClick('Home')}
                 >
-                    <img src="/Logo.png" alt="AniSphere Logo" style={{ height: '2rem', width: 'auto' }} />
+                    <img src="/Logo.webp" alt="AniSphere Logo" style={{ height: '2rem', width: 'auto' }} />
                     ANI<span style={{ color: 'var(--text-color)' }}>SPHERE</span>
                 </div>
 
