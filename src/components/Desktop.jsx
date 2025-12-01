@@ -3,10 +3,10 @@ import { useGoogleAuth } from '../context/GoogleAuthContext';
 import WallpaperCard from './WallpaperCard';
 import DetailModal from './DetailModal';
 import GoogleSignInButton from './GoogleSignInButton';
-import { Monitor, RefreshCw, Star } from 'lucide-react';
+import { Monitor, RefreshCw, Star, LogOut } from 'lucide-react';
 
 function Desktop() {
-    const { isAuthenticated, accessToken } = useGoogleAuth();
+    const { isAuthenticated, accessToken, logout } = useGoogleAuth();
     const [wallpapers, setWallpapers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -133,9 +133,23 @@ function Desktop() {
                 <div className="error-message">
                     <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Failed to load wallpapers</p>
                     <p style={{ color: 'var(--text-muted)' }}>{error}</p>
-                    <button className="btn-primary" onClick={fetchDriveWallpapers} style={{ marginTop: '1rem' }}>
-                        Try Again
-                    </button>
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem', flexWrap: 'wrap' }}>
+                        <button className="btn-primary" onClick={fetchDriveWallpapers}>
+                            Try Again
+                        </button>
+                        <button
+                            className="btn-logout"
+                            onClick={logout}
+                            style={{
+                                padding: '0.8rem 2rem',
+                                borderRadius: '99px',
+                                fontSize: '1rem'
+                            }}
+                        >
+                            <LogOut size={18} />
+                            Sign Out & Retry
+                        </button>
+                    </div>
                 </div>
             ) : wallpapers.length === 0 ? (
                 <div className="empty-state">
