@@ -45,12 +45,12 @@ function Desktop() {
 
     if (!isAuthenticated()) {
         return (
-            <section id="desktop" className="container" style={{ padding: '4rem 20px', minHeight: '60vh' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-                    <Monitor color="var(--primary-color)" size={32} />
-                    <h2 className="neon-text" style={{ fontSize: '2rem', margin: 0 }}>
+            <section id="desktop" className="container" style={{ padding: '6rem 20px 4rem', minHeight: '80vh' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '3rem' }}>
+                    <Monitor color="var(--primary-color)" size={40} />
+                    <h1 className="neon-text" style={{ fontSize: '2.5rem', margin: 0 }}>
                         Desktop Wallpapers
-                    </h2>
+                    </h1>
                 </div>
 
                 <div className="signin-prompt">
@@ -68,18 +68,18 @@ function Desktop() {
     }
 
     return (
-        <section id="desktop" className="container" style={{ padding: '4rem 20px', minHeight: '60vh' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <section id="desktop" className="container" style={{ padding: '6rem 20px 4rem', minHeight: '80vh' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <Monitor color="var(--primary-color)" size={32} />
-                    <h2 className="neon-text" style={{ fontSize: '2rem', margin: 0 }}>
+                    <Monitor color="var(--primary-color)" size={40} />
+                    <h1 className="neon-text" style={{ fontSize: '2.5rem', margin: 0 }}>
                         Desktop Wallpapers
-                    </h2>
+                    </h1>
                     <span style={{
                         background: 'var(--glass-bg)',
-                        padding: '0.2rem 0.8rem',
+                        padding: '0.3rem 1rem',
                         borderRadius: '20px',
-                        fontSize: '0.9rem',
+                        fontSize: '1rem',
                         border: '1px solid var(--glass-border)'
                     }}>
                         {wallpapers.length}

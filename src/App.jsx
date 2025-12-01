@@ -13,6 +13,7 @@ const ThreeBackground = lazy(() => import('./components/ThreeBackground'));
 const WallpaperGrid = lazy(() => import('./components/WallpaperGrid'));
 const FeaturedCollections = lazy(() => import('./components/FeaturedCollections'));
 const Favorites = lazy(() => import('./components/Favorites'));
+const Desktop = lazy(() => import('./components/Desktop'));
 
 // Loading fallback
 const PageLoader = () => (
@@ -54,11 +55,15 @@ function App() {
                     <WallpaperGrid />
                   </Suspense>
                 </>
-              ) : (
+              ) : currentView === 'favorites' ? (
                 <Suspense fallback={<PageLoader />}>
                   <Favorites />
                 </Suspense>
-              )}
+              ) : currentView === 'desktop' ? (
+                <Suspense fallback={<PageLoader />}>
+                  <Desktop />
+                </Suspense>
+              ) : null}
             </main>
             <ScrollToTop />
             <Footer />

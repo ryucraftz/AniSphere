@@ -29,6 +29,9 @@ function Header({ onNavigate }) {
         } else if (item === 'Favorites') {
             onNavigate('favorites');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (item === 'Desktop') {
+            onNavigate('desktop');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else if (item === 'Collections') {
             onNavigate('home');
             setTimeout(() => {
@@ -68,6 +71,9 @@ function Header({ onNavigate }) {
                         </li>
                         <li className="nav-item">
                             <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('Collections'); }}>Collections</a>
+                        </li>
+                        <li className="nav-item">
+                            <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('Desktop'); }}>Desktop</a>
                         </li>
                         <li className="nav-item">
                             <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('Favorites'); }}>Favorites</a>
@@ -119,7 +125,7 @@ function Header({ onNavigate }) {
                         }}
                     >
                         <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', width: '100%' }}>
-                            {['Home', 'Collections', 'Favorites', 'About'].map((item) => (
+                            {['Home', 'Collections', 'Desktop', 'Favorites', 'About'].map((item) => (
                                 <li key={item} className="nav-item" style={{ width: '100%', textAlign: 'center' }}>
                                     <a
                                         href="#"
