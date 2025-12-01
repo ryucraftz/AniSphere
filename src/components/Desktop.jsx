@@ -31,33 +31,35 @@ function Desktop() {
 
     // Filter wallpapers by aspect ratio (landscape for desktop)
     const desktopWallpapers = useMemo(() => {
-        // For now, show all wallpapers if we don't have good resolution data
-        // Most anime wallpapers are landscape anyway
         const filtered = wallpapers.filter(wp => {
-            // Exclude explicitly vertical/mobile wallpapers
+            // First check: exclude based on title keywords
             const title = wp.title?.toLowerCase() || '';
             if (title.includes('mobile') || title.includes('phone') || title.includes('vertical') || title.includes('portrait')) {
                 return false;
             }
 
-            // If resolution available, check aspect ratio
+            // Second check: if resolution data exists, use it
             if (wp.resolution && wp.resolution !== 'Unknown' && wp.resolution.includes('x')) {
                 const parts = wp.resolution.toLowerCase().split('x');
                 if (parts.length === 2) {
-                    const width = parseInt(parts[0]);
-                    const height = parseInt(parts[1]);
-                    if (!isNaN(width) && !isNaN(height)) {
-                        // Desktop wallpapers are landscape: width > height
-                        return width > height;
+                    const width = parseInt(parts[0].trim());
+                    const height = parseInt(parts[1].trim());
+                    if (!isNaN(width) && !isNaN(height) && height > 0) {
+                        const aspectRatio = width / height;
+                        // Desktop wallpapers: landscape (aspect ratio > 1)
+                        // Typically 16:9 (1.78), 16:10 (1.6), 21:9 (2.33)
+                        // Exclude portrait: 9:16 (0.56), 10:16 (0.625)
+                        return aspectRatio > 1.0;
                     }
                 }
             }
 
-            // Default: include if no clear vertical indicators
-            return true;
+            // If no resolution data, default to EXCLUDE to be safe
+            // This prevents showing unknown aspect ratio images
+            return false;
         });
 
-        console.log(`Desktop filter: ${filtered.length} of ${wallpapers.length} wallpapers shown`);
+        console.log(`Desktop filter: ${filtered.length} of ${wallpapers.length} wallpapers (landscape only)`);
         return filtered;
     }, [wallpapers]);
 
