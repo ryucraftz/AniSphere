@@ -77,9 +77,11 @@ function WallpaperCard({ wallpaper, onClick }) {
                         alignItems: 'center',
                         cursor: 'pointer',
                         zIndex: 3,
+                        cursor: 'pointer',
+                        zIndex: 3,
                         transition: 'all 0.3s ease',
-                        opacity: favorite ? 1 : 0,
-                        transform: favorite ? 'scale(1)' : 'scale(0.8)',
+                        opacity: 1,
+                        transform: 'scale(1)',
                     }}
                 >
                     <Heart
@@ -113,13 +115,9 @@ function WallpaperCard({ wallpaper, onClick }) {
         .wallpaper-card:hover .overlay {
           opacity: 1;
         }
-        .wallpaper-card:hover .favorite-btn {
-            opacity: 1;
-            transform: scale(1);
-        }
         .favorite-btn:hover {
             background: rgba(255, 255, 255, 0.2) !important;
-            transform: scale(1.1) !important;
+            transform: scale(1.1);
         }
         .wallpaper-card:hover img {
           transform: scale(1.1);
