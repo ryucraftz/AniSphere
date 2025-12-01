@@ -23,18 +23,48 @@ function Desktop() {
         setError(null);
 
         try {
-            const response = await fetch('/api/drive-favorites', {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                },
-            });
+            // Call Google Drive API directly
+            const driveResponse = await fetch(
+                'https://www.googleapis.com/drive/v3/files?' + new URLSearchParams({
+                    q: "starred = true and mimeType contains 'image/' and trashed = false",
+                    fields: 'files(id, name, mimeType, description, createdTime, modifiedTime, size, thumbnailLink, webContentLink)',
+                    orderBy: 'modifiedTime desc',
+                    pageSize: '100',
+                }),
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                    },
+                }
+            );
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch Drive favorites');
+            if (!driveResponse.ok) {
+                const errorData = await driveResponse.json();
+                console.error('Drive API error:', errorData);
+                throw new Error('Failed to fetch Drive files');
             }
 
-            const data = await response.json();
-            setWallpapers(data);
+            const data = await driveResponse.json();
+            const files = data.files || [];
+
+            // Transform to wallpaper format
+            const wallpapers = files.map((file) => {
+                const tags = file.description ? file.description.split(',').map((t) => t.trim()) : [];
+                return {
+                    id: file.id,
+                    title: file.name.replace(/\.[^/.]+$/, ''), // Remove extension
+                    image: file.thumbnailLink || `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`,
+                    downloadUrl: file.webContentLink,
+                    category: tags[0] || 'Desktop',
+                    tags: tags.length > 1 ? tags.slice(1) : ['wallpaper'],
+                    resolution: 'Unknown',
+                    size: file.size ? `${(parseInt(file.size) / 1024 / 1024).toFixed(2)} MB` : 'Unknown',
+                    uploadDate: file.createdTime,
+                    source: 'google-drive',
+                };
+            });
+
+            setWallpapers(wallpapers);
         } catch (err) {
             console.error('Error fetching Drive favorites:', err);
             setError(err.message);
