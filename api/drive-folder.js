@@ -1,6 +1,6 @@
-// Google Drive Folder ID for Desktop wallpapers
-const DRIVE_FOLDER_ID = '13bAkWKtBigSsw1ULRoSA4mATv1RdcV9s';
-const GOOGLE_API_KEY = process.env.VITE_GOOGLE_API_KEY || '';
+// Google Drive Folder ID from environment variable
+const DRIVE_FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID2 || '';
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || '';
 
 export default async function handler(req, res) {
     if (req.method !== 'GET') {
@@ -8,7 +8,11 @@ export default async function handler(req, res) {
     }
 
     if (!GOOGLE_API_KEY) {
-        return res.status(500).json({ error: 'Google API key not configured' });
+        return res.status(500).json({ error: 'GOOGLE_API_KEY environment variable not configured' });
+    }
+
+    if (!DRIVE_FOLDER_ID) {
+        return res.status(500).json({ error: 'GOOGLE_DRIVE_FOLDER_ID2 environment variable not configured' });
     }
 
     try {
