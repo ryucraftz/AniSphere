@@ -72,6 +72,61 @@ function WallpaperCard({ wallpaper, onClick }) {
                         border: 'none',
                         borderRadius: '50%',
                         width: '35px',
+                        height: '35px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        zIndex: 3,
+                        transition: 'all 0.3s ease',
+                        opacity: 1,
+                        transform: 'scale(1)',
+                    }}
+                >
+                    <Heart
+                        size={20}
+                        color={favorite ? '#fe2c55' : '#fff'}
+                        fill={favorite ? '#fe2c55' : 'none'}
+                    />
+                </button>
+
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        downloadImage(wallpaper.image, `${wallpaper.title}.png`);
+                    }}
+                    className="download-btn-card"
+                    style={{
+                        position: 'absolute',
+                        top: '55px',
+                        right: '10px',
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '35px',
+                        height: '35px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        zIndex: 3,
+                        transition: 'all 0.3s ease',
+                        opacity: 1,
+                        transform: 'scale(1)',
+                    }}
+                >
+                    <Download
+                        size={18}
+                        color="#fff"
+                    />
+                </button>
+
+                <div className="overlay" style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    padding: '1rem',
                     background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
                     opacity: 0,
                     transition: 'all 0.3s ease-in-out',
