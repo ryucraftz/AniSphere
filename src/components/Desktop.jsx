@@ -20,18 +20,32 @@ function Desktop() {
         try {
             // Fetch from Google Drive folder API
             const response = await fetch('/api/drive-folder');
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status} ${response.statusText}`);
+            }
+
             const data = await response.json();
+
+            // Validate response is an array
+            if (!Array.isArray(data)) {
+                console.error('Invalid response format:', data);
+                throw new Error('Invalid response format from API');
+            }
+
             setWallpapers(data);
         } catch (err) {
             console.error('Error fetching Desktop wallpapers:', err);
-            setError(err.message);
+            setError(err.message || 'Failed to load wallpapers');
+            setWallpapers([]); // Ensure wallpapers is always an array
         } finally {
             setLoading(false);
         }
     };
 
     // No filtering needed - folder is already curated for desktop wallpapers
-    const desktopWallpapers = wallpapers;
+    // Ensure it's always an array to prevent .map errors
+    const desktopWallpapers = Array.isArray(wallpapers) ? wallpapers : [];
 
     if (loading) {
         return (
