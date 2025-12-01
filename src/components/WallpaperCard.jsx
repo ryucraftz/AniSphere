@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Download } from 'lucide-react';
 import { useFavorites } from '../context/FavoritesContext';
@@ -9,16 +9,29 @@ function WallpaperCard({ wallpaper, onClick }) {
     const { isFavorite, toggleFavorite } = useFavorites();
     const favorite = isFavorite(wallpaper.id);
 
-    const handleFavoriteClick = (e) => {
+    const handleFavoriteClick = useCallback((e) => {
         e.stopPropagation();
         toggleFavorite(wallpaper);
-    };
+    }, [toggleFavorite, wallpaper]);
+
+    const handleDownloadClick = useCallback((e) => {
+        e.stopPropagation();
+        downloadImage(wallpaper.image, `${wallpaper.title}.png`);
+    }, [wallpaper.image, wallpaper.title]);
+
+    const handleCardClick = useCallback(() => {
+        onClick && onClick(wallpaper);
+    }, [onClick, wallpaper]);
+
+    const handleImageLoad = useCallback(() => {
+        setIsLoading(false);
+    }, []);
 
     return (
         <motion.div
             className="wallpaper-card glass-card"
             whileHover={{ y: -10, scale: 1.02 }}
-            onClick={() => onClick && onClick(wallpaper)}
+            onClick={handleCardClick}
         >
             <div className="wallpaper-card-container">
                 {isLoading && (
@@ -29,13 +42,15 @@ function WallpaperCard({ wallpaper, onClick }) {
                     alt={wallpaper.title}
                     className={`wallpaper-card-image prevent-download ${isLoading ? 'loading' : 'loaded'}`}
                     draggable="false"
+                    loading="lazy"
                     onContextMenu={(e) => e.preventDefault()}
-                    onLoad={() => setIsLoading(false)}
+                    onLoad={handleImageLoad}
                 />
 
                 <button
                     onClick={handleFavoriteClick}
                     className="favorite-btn"
+                    aria-label="Toggle favorite"
                 >
                     <Heart
                         size={20}
@@ -45,11 +60,9 @@ function WallpaperCard({ wallpaper, onClick }) {
                 </button>
 
                 <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        downloadImage(wallpaper.image, `${wallpaper.title}.png`);
-                    }}
+                    onClick={handleDownloadClick}
                     className="download-btn-card"
+                    aria-label="Download wallpaper"
                 >
                     <Download
                         size={18}
@@ -66,4 +79,5 @@ function WallpaperCard({ wallpaper, onClick }) {
     );
 }
 
-export default WallpaperCard;
+// Memoize component to prevent unnecessary re-renders
+export default React.memo(WallpaperCard);

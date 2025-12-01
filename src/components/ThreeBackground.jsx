@@ -2,10 +2,25 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
+// Detect device type for performance optimization
+const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || window.innerWidth < 768;
+};
+
+const isLowEndDevice = () => {
+    // Check for low-end devices based on hardware concurrency
+    return navigator.hardwareConcurrency <= 4 || isMobile();
+};
+
 function ReactiveParticles() {
-    const count = 2000;
+    // Adaptive particle count based on device
+    const count = useMemo(() => {
+        if (isLowEndDevice()) return 500;  // Mobile/low-end: 500 particles
+        return 1000;  // Desktop: 1000 particles (reduced from 2000)
+    }, []);
+
     const mesh = useRef();
-    const light = useRef();
 
     const particles = useMemo(() => {
         const temp = [];
@@ -33,13 +48,7 @@ function ReactiveParticles() {
             const b = Math.sin(t) + Math.cos(t * 2) / 10;
             const s = Math.cos(t);
 
-            // Mouse interaction
-            const mouseX = (state.pointer.x * state.viewport.width) / 2;
-            const mouseY = (state.pointer.y * state.viewport.height) / 2;
-
-            // Simple distance check for repulsion/attraction could go here
-            // For now, just global movement
-
+            // Simplified mouse interaction for better performance
             particle.mx += (state.pointer.x * 1000 - particle.mx) * 0.01;
             particle.my += (state.pointer.y * 1000 - 1 - particle.my) * 0.01;
 
@@ -57,19 +66,25 @@ function ReactiveParticles() {
     });
 
     return (
-        <>
-            <instancedMesh ref={mesh} args={[null, null, count]}>
-                <dodecahedronGeometry args={[0.2, 0]} />
-                <meshPhongMaterial color="#25f4ee" />
-            </instancedMesh>
-        </>
+        <instancedMesh ref={mesh} args={[null, null, count]}>
+            {/* Simplified geometry: sphere instead of dodecahedron */}
+            <sphereGeometry args={[0.15, 8, 8]} />
+            <meshPhongMaterial color="#25f4ee" />
+        </instancedMesh>
     );
 }
 
 function ThreeBackground() {
+    // Adaptive DPR based on device
+    const dpr = useMemo(() => isLowEndDevice() ? [1, 1] : [1, 2], []);
+
     return (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none' }}>
-            <Canvas camera={{ position: [0, 0, 100], fov: 75 }} dpr={[1, 2]}>
+            <Canvas
+                camera={{ position: [0, 0, 100], fov: 75 }}
+                dpr={dpr}
+                performance={{ min: 0.5 }} // Allow quality reduction if needed
+            >
                 <ambientLight intensity={0.5} />
                 <pointLight position={[100, 100, 100]} intensity={1} />
                 <ReactiveParticles />
