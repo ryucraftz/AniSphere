@@ -25,52 +25,107 @@ function Desktop() {
             console.error('Error fetching wallpapers:', err);
             setError(err.message);
         } finally {
-            <p>Loading desktop wallpapers...</p>
-                </div >
-            </section >
-        );
-}
+            setLoading(false);
+        }
+    };
 
-if (error) {
+    // Filter wallpapers by aspect ratio (landscape for desktop)
+    const desktopWallpapers = useMemo(() => {
+        // For now, show all wallpapers if we don't have good resolution data
+        // Most anime wallpapers are landscape anyway
+        const filtered = wallpapers.filter(wp => {
+            // Exclude explicitly vertical/mobile wallpapers
+            const title = wp.title?.toLowerCase() || '';
+            if (title.includes('mobile') || title.includes('phone') || title.includes('vertical') || title.includes('portrait')) {
+                return false;
+            }
+
+            // If resolution available, check aspect ratio
+            if (wp.resolution && wp.resolution !== 'Unknown' && wp.resolution.includes('x')) {
+                const parts = wp.resolution.toLowerCase().split('x');
+                if (parts.length === 2) {
+                    const width = parseInt(parts[0]);
+                    const height = parseInt(parts[1]);
+                    if (!isNaN(width) && !isNaN(height)) {
+                        // Desktop wallpapers are landscape: width > height
+                        return width > height;
+                    }
+                }
+            }
+
+            // Default: include if no clear vertical indicators
+            return true;
+        });
+
+        console.log(`Desktop filter: ${filtered.length} of ${wallpapers.length} wallpapers shown`);
+        return filtered;
+    }, [wallpapers]);
+
+    if (loading) {
+        return (
+            <section id="desktop" className="container" style={{ padding: '6rem 20px 4rem', minHeight: '80vh' }}>
+                <div className="loading-skeleton">
+                    <p>Loading desktop wallpapers...</p>
+                </div>
+            </section>
+        );
+    }
+
+    if (error) {
+        return (
+            <section id="desktop" className="container" style={{ padding: '6rem 20px 4rem', minHeight: '80vh' }}>
+                <div className="error-message">
+                    <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Failed to load wallpapers</p>
+                    <p style={{ color: 'var(--text-muted)' }}>{error}</p>
+                    <button className="btn-primary" onClick={fetchWallpapers} style={{ marginTop: '1.5rem' }}>
+                        Try Again
+                    </button>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section id="desktop" className="container" style={{ padding: '6rem 20px 4rem', minHeight: '80vh' }}>
-            <div className="error-message">
-                <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Failed to load wallpapers</p>
-                <p style={{ color: 'var(--text-muted)' }}>{error}</p>
-                <button className="btn-primary" onClick={fetchWallpapers} style={{ marginTop: '1.5rem' }}>
-                    Try Again
-                </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '3rem' }}>
+                <Monitor color="var(--primary-color)" size={40} />
+                <h1 className="neon-text" style={{ fontSize: '2.5rem', margin: 0 }}>
+                    Desktop Wallpapers
+                </h1>
+                <span style={{
+                    background: 'var(--glass-bg)',
+                    padding: '0.3rem 1rem',
+                    borderRadius: '20px',
+                    fontSize: '1rem',
+                    border: '1px solid var(--glass-border)'
+                }}>
+                    {desktopWallpapers.length}
+                </span>
             </div>
+
+            <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '1.1rem' }}>
+                Wallpapers optimized for desktop screens (excluding vertical/mobile formats)
+            </p>
+
+            {desktopWallpapers.length === 0 ? (
+                <div className="empty-state">
+                    <Monitor size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
+                    <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>No desktop wallpapers found</p>
+                    <p style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>
+                        Desktop wallpapers are filtered by landscape aspect ratio
+                    </p>
+                </div>
+            ) : (
+                <div className="wallpaper-grid">
+                    {desktopWallpapers.map(wp => (
+                        <WallpaperCard key={wp.id} wallpaper={wp} onClick={setSelectedWallpaper} />
+                    ))}
+                </div>
+            )}
+
+            <DetailModal wallpaper={selectedWallpaper} onClose={() => setSelectedWallpaper(null)} />
         </section>
     );
-}
-
-return (
-    <section id="desktop" className="container" style={{ padding: '6rem 20px 4rem', minHeight: '80vh' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '3rem' }}>
-            <Monitor color="var(--primary-color)" size={40} />
-            <h1 className="neon-text" style={{ fontSize: '2.5rem', margin: 0 }}>
-                Desktop Wallpapers
-            </h1>
-            <span style={{
-                background: 'var(--glass-bg)',
-                padding: '0.3rem 1rem',
-                borderRadius: '20px',
-                fontSize: '1rem',
-                Desktop wallpapers are filtered by landscape aspect ratio
-                </p>
-    </div>
-) : (
-    <div className="wallpaper-grid">
-        {desktopWallpapers.map(wp => (
-            <WallpaperCard key={wp.id} wallpaper={wp} onClick={setSelectedWallpaper} />
-        ))}
-    </div>
-)}
-
-<DetailModal wallpaper={selectedWallpaper} onClose={() => setSelectedWallpaper(null)} />
-    </section >
-);
 }
 
 export default Desktop;
