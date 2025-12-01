@@ -53,9 +53,10 @@ function Header({ onNavigate }) {
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap', width: '100%', padding: '0 1rem' }}>
                 <div
                     className="logo neon-text"
-                    style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '1px', color: 'var(--primary-color)', cursor: 'pointer' }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem', fontWeight: 800, letterSpacing: '1px', color: 'var(--primary-color)', cursor: 'pointer' }}
                     onClick={() => handleNavClick('Home')}
                 >
+                    <img src="/Logo.png" alt="AniSphere Logo" style={{ height: '2rem', width: 'auto' }} />
                     ANI<span style={{ color: 'var(--text-color)' }}>SPHERE</span>
                 </div>
 
