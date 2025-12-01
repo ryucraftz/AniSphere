@@ -1,23 +1,50 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import WallpaperGrid from './components/WallpaperGrid';
-import FeaturedCollections from './components/FeaturedCollections';
 import Footer from './components/Footer';
-import ThreeBackground from './components/ThreeBackground';
+import ScrollToTop from './components/ScrollToTop';
 import { SearchProvider } from './context/SearchContext';
+
+// Lazy load heavy components
+const ThreeBackground = lazy(() => import('./components/ThreeBackground'));
+const WallpaperGrid = lazy(() => import('./components/WallpaperGrid'));
+const FeaturedCollections = lazy(() => import('./components/FeaturedCollections'));
+
+// Loading fallback
+const PageLoader = () => (
+  <div style={{
+    height: '100vh',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'var(--primary-color)'
+  }}>
+    <div className="loader">Loading...</div>
+  </div>
+);
 
 function App() {
   return (
     <SearchProvider>
       <div className="app">
-        <ThreeBackground />
+        <Helmet>
+          <title>AniSphere - Anime Wallpapers</title>
+          <meta name="description" content="Discover and download high-quality anime wallpapers. AniSphere offers a vast collection of stunning anime backgrounds for your devices." />
+        </Helmet>
+        <Suspense fallback={<div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, background: 'var(--bg-color)' }} />}>
+          <ThreeBackground />
+        </Suspense>
         <Header />
         <main>
           <Hero />
-          <FeaturedCollections />
-          <WallpaperGrid />
+          <Suspense fallback={<PageLoader />}>
+            <FeaturedCollections />
+            <WallpaperGrid />
+          </Suspense>
         </main>
+        <ScrollToTop />
         <Footer />
       </div>
     </SearchProvider>
