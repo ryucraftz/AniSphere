@@ -5,13 +5,16 @@ import './index.css';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 
 import { HelmetProvider } from 'react-helmet-async';
+import { FavoritesProvider } from './context/FavoritesContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <FavoritesProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </FavoritesProvider>
     </HelmetProvider>
   </React.StrictMode>,
 );

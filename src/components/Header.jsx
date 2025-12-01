@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 import { useSearch } from '../context/SearchContext';
 
-function Header() {
+function Header({ onNavigate }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const { searchQuery, setSearchQuery } = useSearch();
@@ -23,11 +23,24 @@ function Header() {
     }, [searchQuery, isSearchOpen]);
 
     const handleNavClick = (item) => {
-        if (item === 'Collections') {
-            document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+        if (item === 'Home') {
+            onNavigate('home');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (item === 'Favorites') {
+            onNavigate('favorites');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (item === 'Collections') {
+            onNavigate('home');
+            setTimeout(() => {
+                document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
         } else if (item === 'About') {
-            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+            onNavigate('home');
+            setTimeout(() => {
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
         }
+        setIsMenuOpen(false);
     };
 
     return (
@@ -38,35 +51,28 @@ function Header() {
             padding: '0.3rem 0'
         }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap', width: '100%', padding: '0 1rem' }}>
-                <div className="logo neon-text" style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '1px', color: 'var(--primary-color)' }}>
+                <div
+                    className="logo neon-text"
+                    style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '1px', color: 'var(--primary-color)', cursor: 'pointer' }}
+                    onClick={() => handleNavClick('Home')}
+                >
                     ANI<span style={{ color: 'var(--text-color)' }}>SPHERE</span>
                 </div>
 
                 {/* Desktop Nav */}
                 <nav className="desktop-nav">
                     <ul style={{ display: 'flex', gap: '2rem' }}>
-                        <li className="nav-item"><a href="#">Home</a></li>
                         <li className="nav-item">
-                            <a
-                                href="#"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handleNavClick('Collections');
-                                }}
-                            >
-                                Collections
-                            </a>
+                            <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('Home'); }}>Home</a>
                         </li>
                         <li className="nav-item">
-                            <a
-                                href="#"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handleNavClick('About');
-                                }}
-                            >
-                                About
-                            </a>
+                            <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('Collections'); }}>Collections</a>
+                        </li>
+                        <li className="nav-item">
+                            <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('Favorites'); }}>Favorites</a>
+                        </li>
+                        <li className="nav-item">
+                            <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('About'); }}>About</a>
                         </li>
                     </ul>
                 </nav>
@@ -112,16 +118,13 @@ function Header() {
                         }}
                     >
                         <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', width: '100%' }}>
-                            {['Home', 'Collections', 'About'].map((item) => (
+                            {['Home', 'Collections', 'Favorites', 'About'].map((item) => (
                                 <li key={item} className="nav-item" style={{ width: '100%', textAlign: 'center' }}>
                                     <a
                                         href="#"
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            setIsMenuOpen(false);
-                                            setTimeout(() => {
-                                                handleNavClick(item);
-                                            }, 300);
+                                            handleNavClick(item);
                                         }}
                                         style={{ fontSize: '1.5rem', display: 'block', padding: '1rem' }}
                                     >

@@ -10,6 +10,7 @@ import { SearchProvider } from './context/SearchContext';
 const ThreeBackground = lazy(() => import('./components/ThreeBackground'));
 const WallpaperGrid = lazy(() => import('./components/WallpaperGrid'));
 const FeaturedCollections = lazy(() => import('./components/FeaturedCollections'));
+const Favorites = lazy(() => import('./components/Favorites'));
 
 // Loading fallback
 const PageLoader = () => (
@@ -26,6 +27,8 @@ const PageLoader = () => (
 );
 
 function App() {
+  const [currentView, setCurrentView] = React.useState('home');
+
   return (
     <SearchProvider>
       <div className="app">
@@ -36,13 +39,21 @@ function App() {
         <Suspense fallback={<div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, background: 'var(--bg-color)' }} />}>
           <ThreeBackground />
         </Suspense>
-        <Header />
+        <Header onNavigate={setCurrentView} />
         <main>
-          <Hero />
-          <Suspense fallback={<PageLoader />}>
-            <FeaturedCollections />
-            <WallpaperGrid />
-          </Suspense>
+          {currentView === 'home' ? (
+            <>
+              <Hero />
+              <Suspense fallback={<PageLoader />}>
+                <FeaturedCollections />
+                <WallpaperGrid />
+              </Suspense>
+            </>
+          ) : (
+            <Suspense fallback={<PageLoader />}>
+              <Favorites />
+            </Suspense>
+          )}
         </main>
         <ScrollToTop />
         <Footer />

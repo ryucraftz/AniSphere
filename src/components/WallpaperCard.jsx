@@ -1,8 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Heart } from 'lucide-react';
+import { useFavorites } from '../context/FavoritesContext';
 
 function WallpaperCard({ wallpaper, onClick }) {
     const [isLoading, setIsLoading] = React.useState(true);
+    const { isFavorite, toggleFavorite } = useFavorites();
+    const favorite = isFavorite(wallpaper.id);
+
+    const handleFavoriteClick = (e) => {
+        e.stopPropagation();
+        toggleFavorite(wallpaper);
+    };
 
     return (
         <motion.div
@@ -50,6 +59,36 @@ function WallpaperCard({ wallpaper, onClick }) {
                         opacity: isLoading ? 0 : 1
                     }}
                 />
+
+                <button
+                    onClick={handleFavoriteClick}
+                    className="favorite-btn"
+                    style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '35px',
+                        height: '35px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        zIndex: 3,
+                        transition: 'all 0.3s ease',
+                        opacity: favorite ? 1 : 0,
+                        transform: favorite ? 'scale(1)' : 'scale(0.8)',
+                    }}
+                >
+                    <Heart
+                        size={20}
+                        color={favorite ? '#fe2c55' : '#fff'}
+                        fill={favorite ? '#fe2c55' : 'none'}
+                    />
+                </button>
+
                 <div className="overlay" style={{
                     position: 'absolute',
                     bottom: 0,
@@ -73,6 +112,14 @@ function WallpaperCard({ wallpaper, onClick }) {
         }
         .wallpaper-card:hover .overlay {
           opacity: 1;
+        }
+        .wallpaper-card:hover .favorite-btn {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .favorite-btn:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            transform: scale(1.1) !important;
         }
         .wallpaper-card:hover img {
           transform: scale(1.1);
