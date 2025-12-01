@@ -5,9 +5,15 @@ import DetailModal from './DetailModal';
 import { useSearch } from '../context/SearchContext';
 import { X } from 'lucide-react';
 
+import useInfiniteScroll from '../hooks/useInfiniteScroll';
+
 function WallpaperGrid() {
     const [selectedWallpaper, setSelectedWallpaper] = useState(null);
     const [wallpapers, setWallpapers] = useState([]);
+    const [visibleWallpapers, setVisibleWallpapers] = useState([]);
+    const [page, setPage] = useState(1);
+    const ITEMS_PER_PAGE = 20;
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { searchQuery, selectedCollection, clearFilters } = useSearch();
@@ -83,6 +89,24 @@ function WallpaperGrid() {
         return filtered;
     }, [wallpapers, searchQuery, selectedCollection]);
 
+    // Reset visible wallpapers when filters change
+    useEffect(() => {
+        setPage(1);
+        setVisibleWallpapers(filteredWallpapers.slice(0, ITEMS_PER_PAGE));
+    }, [filteredWallpapers]);
+
+    // Load more wallpapers
+    const loadMore = () => {
+        if (visibleWallpapers.length < filteredWallpapers.length) {
+            const nextPage = page + 1;
+            const nextItems = filteredWallpapers.slice(0, nextPage * ITEMS_PER_PAGE);
+            setVisibleWallpapers(nextItems);
+            setPage(nextPage);
+        }
+    };
+
+    const sentinelRef = useInfiniteScroll(loadMore);
+
     if (loading) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-color)' }}>Loading wallpapers...</div>;
     if (error) return <div className="container" style={{ padding: '4rem', textAlign: 'center', color: 'red' }}>Error: {error}</div>;
 
@@ -124,7 +148,7 @@ function WallpaperGrid() {
 
             <FilterBar />
 
-            {filteredWallpapers.length === 0 ? (
+            {visibleWallpapers.length === 0 ? (
                 <div style={{
                     textAlign: 'center',
                     padding: '4rem 2rem',
@@ -134,11 +158,18 @@ function WallpaperGrid() {
                     <p style={{ fontSize: '1rem' }}>Try a different search term or collection</p>
                 </div>
             ) : (
-                <div className="wallpaper-grid">
-                    {filteredWallpapers.map(wp => (
-                        <WallpaperCard key={wp.id} wallpaper={wp} onClick={setSelectedWallpaper} />
-                    ))}
-                </div>
+                <>
+                    <div className="wallpaper-grid">
+                        {visibleWallpapers.map(wp => (
+                            <WallpaperCard key={wp.id} wallpaper={wp} onClick={setSelectedWallpaper} />
+                        ))}
+                    </div>
+                    {visibleWallpapers.length < filteredWallpapers.length && (
+                        <div ref={sentinelRef} style={{ height: '20px', margin: '20px 0', textAlign: 'center', color: 'var(--text-muted)' }}>
+                            Loading more...
+                        </div>
+                    )}
+                </>
             )}
             <style>{`
                 /* Mobile First Grid */
