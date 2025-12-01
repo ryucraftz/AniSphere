@@ -1,12 +1,10 @@
 import React, { Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import { SearchProvider } from './context/SearchContext';
-import { GoogleAuthProvider } from './context/GoogleAuthContext';
 
 // Lazy load heavy components
 const ThreeBackground = lazy(() => import('./components/ThreeBackground'));
@@ -31,46 +29,41 @@ const PageLoader = () => (
 
 function App() {
   const [currentView, setCurrentView] = React.useState('home');
-  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
   return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <GoogleAuthProvider>
-        <SearchProvider>
-          <div className="app">
-            <Helmet>
-              <title>AniSphere - Anime Wallpapers</title>
-              <meta name="description" content="Discover and download high-quality anime wallpapers. AniSphere offers a vast collection of stunning anime backgrounds for your devices." />
-            </Helmet>
-            <Suspense fallback={<div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, background: 'var(--bg-color)' }} />}>
-              <ThreeBackground />
+    <SearchProvider>
+      <div className="app">
+        <Helmet>
+          <title>AniSphere - Anime Wallpapers</title>
+          <meta name="description" content="Discover and download high-quality anime wallpapers. AniSphere offers a vast collection of stunning anime backgrounds for your devices." />
+        </Helmet>
+        <Suspense fallback={<div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, background: 'var(--bg-color)' }} />}>
+          <ThreeBackground />
+        </Suspense>
+        <Header onNavigate={setCurrentView} />
+        <main>
+          {currentView === 'home' ? (
+            <>
+              <Hero />
+              <Suspense fallback={<PageLoader />}>
+                <FeaturedCollections />
+                <WallpaperGrid />
+              </Suspense>
+            </>
+          ) : currentView === 'favorites' ? (
+            <Suspense fallback={<PageLoader />}>
+              <Favorites />
             </Suspense>
-            <Header onNavigate={setCurrentView} />
-            <main>
-              {currentView === 'home' ? (
-                <>
-                  <Hero />
-                  <Suspense fallback={<PageLoader />}>
-                    <FeaturedCollections />
-                    <WallpaperGrid />
-                  </Suspense>
-                </>
-              ) : currentView === 'favorites' ? (
-                <Suspense fallback={<PageLoader />}>
-                  <Favorites />
-                </Suspense>
-              ) : currentView === 'desktop' ? (
-                <Suspense fallback={<PageLoader />}>
-                  <Desktop />
-                </Suspense>
-              ) : null}
-            </main>
-            <ScrollToTop />
-            <Footer />
-          </div>
-        </SearchProvider>
-      </GoogleAuthProvider>
-    </GoogleOAuthProvider>
+          ) : currentView === 'desktop' ? (
+            <Suspense fallback={<PageLoader />}>
+              <Desktop />
+            </Suspense>
+          ) : null}
+        </main>
+        <ScrollToTop />
+        <Footer />
+      </div>
+    </SearchProvider>
   );
 }
 
