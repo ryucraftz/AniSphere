@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const GoogleAuthContext = createContext();
 
@@ -42,47 +43,59 @@ export const GoogleAuthProvider = ({ children }) => {
         setAccessToken(null);
     };
 
-    const login = (credentialResponse) => {
-        try {
-            // Decode JWT token to get user info
-            const token = credentialResponse.credential;
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(
-                atob(base64)
-                    .split('')
-                    .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-                    .join('')
-            );
-            const payload = JSON.parse(jsonPayload);
+    const googleLogin = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            try {
+                // tokenResponse.access_token is the actual access token we need
+                const token = tokenResponse.access_token;
 
-            const userData = {
-                name: payload.name,
-                email: payload.email,
-                picture: payload.picture,
-                sub: payload.sub,
-            };
+                // Fetch user info using the access token
+                const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
 
-            // Store access token (in real app, you'd get this from backend)
-            // For now, we'll use the credential as the token
-            const expiryTime = Date.now() + 3600000; // 1 hour
+                if (!userInfoResponse.ok) {
+                    throw new Error('Failed to fetch user info');
+                }
 
-            setUser(userData);
-            setAccessToken(credentialResponse.access_token || token);
+                const userInfo = await userInfoResponse.json();
 
-            localStorage.setItem('google_user', JSON.stringify(userData));
-            localStorage.setItem('google_access_token', credentialResponse.access_token || token);
-            localStorage.setItem('google_token_expiry', expiryTime.toString());
-        } catch (error) {
-            console.error('Error during login:', error);
-        }
-    };
+                const userData = {
+                    name: userInfo.name,
+                    email: userInfo.email,
+                    picture: userInfo.picture,
+                    id: userInfo.id,
+                };
+
+                // Token expires in 1 hour (3600 seconds)
+                const expiryTime = Date.now() + (tokenResponse.expires_in * 1000);
+
+                setUser(userData);
+                setAccessToken(token);
+
+                localStorage.setItem('google_user', JSON.stringify(userData));
+                localStorage.setItem('google_access_token', token);
+                localStorage.setItem('google_token_expiry', expiryTime.toString());
+            } catch (error) {
+                console.error('Error during login:', error);
+                clearAuthData();
+            }
+        },
+        onError: (error) => {
+            console.error('Login Failed:', error);
+        },
+        scope: 'https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+    });
 
     const logout = () => {
         clearAuthData();
-        // Also revoke Google session if needed
-        if (window.google?.accounts?.id) {
-            window.google.accounts.id.disableAutoSelect();
+        // Revoke the token
+        if (accessToken) {
+            fetch(`https://oauth2.googleapis.com/revoke?token=${accessToken}`, {
+                method: 'POST',
+            }).catch(err => console.error('Error revoking token:', err));
         }
     };
 
@@ -96,7 +109,7 @@ export const GoogleAuthProvider = ({ children }) => {
                 user,
                 accessToken,
                 loading,
-                login,
+                googleLogin,
                 logout,
                 isAuthenticated,
             }}
@@ -105,3 +118,4 @@ export const GoogleAuthProvider = ({ children }) => {
         </GoogleAuthContext.Provider>
     );
 };
+
