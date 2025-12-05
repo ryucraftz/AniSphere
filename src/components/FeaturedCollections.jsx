@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { COLLECTIONS } from '../data/mockData';
 import ScrollScene from './ScrollScene';
 import { useSearch } from '../context/SearchContext';
+import { ChevronRight } from 'lucide-react';
 
 function FeaturedCollections() {
     const { setSelectedCollection, setSearchQuery } = useSearch();
+    const scrollContainerRef = useRef(null);
 
     const handleCollectionClick = (collection) => {
         // Allow One Piece and Wuthering Waves collections
@@ -17,13 +19,46 @@ function FeaturedCollections() {
         }
     };
 
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+        }
+    };
+
     return (
         <section id="collections" className="container" style={{ padding: '4rem 20px', position: 'relative' }}>
             <div style={{ position: 'absolute', right: 0, top: -50, width: '300px', height: '300px', zIndex: 0 }}>
                 <ScrollScene />
             </div>
-            <h2 className="neon-text" style={{ fontSize: '2rem', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>Featured Collections</h2>
-            <div className="collections-scroll" style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', position: 'relative', zIndex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
+                <h2 className="neon-text" style={{ fontSize: '2rem', margin: 0 }}>Featured Collections</h2>
+                <button
+                    onClick={scrollRight}
+                    className="glass"
+                    style={{
+                        padding: '10px',
+                        borderRadius: '50%',
+                        border: 'none',
+                        color: 'white',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 2,
+                        transition: 'transform 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    aria-label="Scroll right"
+                >
+                    <ChevronRight size={24} />
+                </button>
+            </div>
+            <div
+                ref={scrollContainerRef}
+                className="collections-scroll"
+                style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', position: 'relative', zIndex: 1, scrollBehavior: 'smooth' }}
+            >
                 {COLLECTIONS.map(col => (
                     <motion.div
                         key={col.id}
