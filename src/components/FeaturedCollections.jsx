@@ -1,13 +1,29 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { COLLECTIONS } from '../data/mockData';
 import ScrollScene from './ScrollScene';
 import { useSearch } from '../context/SearchContext';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 function FeaturedCollections() {
     const { setSelectedCollection, setSearchQuery } = useSearch();
     const scrollContainerRef = useRef(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
+
+    const checkScroll = () => {
+        if (scrollContainerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+            setCanScrollLeft(scrollLeft > 0);
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // -10 buffer
+        }
+    };
+
+    useEffect(() => {
+        checkScroll();
+        window.addEventListener('resize', checkScroll);
+        return () => window.removeEventListener('resize', checkScroll);
+    }, []);
 
     const handleCollectionClick = (collection) => {
         // Allow One Piece and Wuthering Waves collections
@@ -25,6 +41,27 @@ function FeaturedCollections() {
         }
     };
 
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+        }
+    };
+
+    const buttonStyle = {
+        padding: '10px',
+        borderRadius: '50%',
+        border: 'none',
+        color: 'white',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 2,
+        transition: 'all 0.2s',
+        background: 'rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(10px)'
+    };
+
     return (
         <section id="collections" className="container" style={{ padding: '4rem 20px', position: 'relative' }}>
             <div style={{ position: 'absolute', right: 0, top: -50, width: '300px', height: '300px', zIndex: 0 }}>
@@ -32,30 +69,40 @@ function FeaturedCollections() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
                 <h2 className="neon-text" style={{ fontSize: '2rem', margin: 0 }}>Featured Collections</h2>
-                <button
-                    onClick={scrollRight}
-                    className="glass"
-                    style={{
-                        padding: '10px',
-                        borderRadius: '50%',
-                        border: 'none',
-                        color: 'white',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 2,
-                        transition: 'transform 0.2s'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    aria-label="Scroll right"
-                >
-                    <ChevronRight size={24} />
-                </button>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <AnimatePresence>
+                        {canScrollLeft && (
+                            <motion.button
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                onClick={scrollLeft}
+                                className="glass"
+                                style={buttonStyle}
+                                whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                                whileTap={{ scale: 0.95 }}
+                                aria-label="Scroll left"
+                            >
+                                <ChevronLeft size={24} />
+                            </motion.button>
+                        )}
+                    </AnimatePresence>
+                    <motion.button
+                        animate={{ opacity: canScrollRight ? 1 : 0.5, pointerEvents: canScrollRight ? 'auto' : 'none' }}
+                        onClick={scrollRight}
+                        className="glass"
+                        style={buttonStyle}
+                        whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                        whileTap={{ scale: 0.95 }}
+                        aria-label="Scroll right"
+                    >
+                        <ChevronRight size={24} />
+                    </motion.button>
+                </div>
             </div>
             <div
                 ref={scrollContainerRef}
+                onScroll={checkScroll}
                 className="collections-scroll"
                 style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', position: 'relative', zIndex: 1, scrollBehavior: 'smooth' }}
             >
