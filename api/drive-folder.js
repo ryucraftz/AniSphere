@@ -67,7 +67,7 @@ export default async function handler(req, res) {
             return {
                 id: file.id,
                 title: file.name.replace(/\.[^/.]+$/, ''), // Remove extension
-                image: `https://drive.google.com/uc?export=view&id=${file.id}`,
+                image: `/api/image/${file.id}`,
                 downloadUrl: `https://drive.google.com/uc?export=download&id=${file.id}`,
                 category: tags[0] || 'Desktop',
                 tags: tags.length > 1 ? tags.slice(1) : ['desktop', 'wallpaper'],
