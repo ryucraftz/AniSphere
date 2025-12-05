@@ -38,13 +38,18 @@ function WallpaperCard({ wallpaper, onClick }) {
                     <div className="wallpaper-card-skeleton" />
                 )}
                 <img
-                    src={wallpaper.image}
+                    src={wallpaper.thumbnail || wallpaper.image}
                     alt={wallpaper.title}
                     className={`wallpaper-card-image prevent-download ${isLoading ? 'loading' : 'loaded'}`}
                     draggable="false"
                     loading="lazy"
                     onContextMenu={(e) => e.preventDefault()}
                     onLoad={handleImageLoad}
+                    onError={(e) => {
+                        if (e.target.src !== wallpaper.image) {
+                            e.target.src = wallpaper.image;
+                        }
+                    }}
                 />
 
                 <button
