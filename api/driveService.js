@@ -117,3 +117,47 @@ export async function getImageProxy(fileId) {
         mimeType: metadata.data.mimeType,
     };
 }
+
+/** Proxy a thumbnail image from Drive. */
+export async function getThumbnailProxy(fileId) {
+    const authClient = await getAuthClient();
+    const drive = google.drive({ version: 'v3', auth: authClient });
+
+    // 1. Get the thumbnail link from file metadata
+    const file = await drive.files.get({
+        fileId,
+        fields: 'thumbnailLink, mimeType',
+    });
+
+    const thumbnailLink = file.data.thumbnailLink;
+    const mimeType = file.data.mimeType;
+
+    if (!thumbnailLink) {
+        throw new Error('No thumbnail available for this file');
+    }
+
+    // 2. Fetch the content of the thumbnail link
+    // Note: The thumbnailLink from Drive often doesn't require auth if the file is public,
+    // but if it's restricted, we might need to pass the access token. 
+    // However, thumbnailLinks are often unique signed URLs. 
+    // If it fails with 403, it often means we can't fetch it easily without a browser session.
+    // BUT: The Drive API V3 'thumbnailLink' is designed to be short-lived but accessible.
+    // If it fails, we might just have to fetch the full image but scale it? 
+    // Actually, let's try fetching it with the same auth headers just in case.
+
+    const token = await authClient.getAccessToken();
+    const response = await fetch(thumbnailLink, {
+        headers: {
+            'Authorization': `Bearer ${token.token}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch thumbnail: ${response.statusText}`);
+    }
+
+    return {
+        imageStream: response.body, // Fetch API returns a ReadableStream
+        mimeType: 'image/jpeg', // Thumbnails are usually JPEGs
+    };
+}

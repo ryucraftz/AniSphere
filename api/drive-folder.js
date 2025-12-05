@@ -75,7 +75,7 @@ export default async function handler(req, res) {
                 size: file.size ? `${(parseInt(file.size) / 1024 / 1024).toFixed(2)} MB` : 'Unknown',
                 uploadDate: file.createdTime,
                 source: 'google-drive-folder',
-                thumbnail: file.thumbnailLink || `/api/image/${file.id}`, // Use Drive thumbnail or fallback to proxy
+                thumbnail: `/api/thumbnail/${file.id}`, // Use server-side proxy for valid auth
             };
         });
 
