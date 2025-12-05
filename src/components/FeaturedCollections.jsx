@@ -69,7 +69,7 @@ function FeaturedCollections() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
                 <h2 className="neon-text" style={{ fontSize: '2rem', margin: 0 }}>Featured Collections</h2>
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <div className="scroll-buttons" style={{ display: 'flex', gap: '10px' }}>
                     <AnimatePresence>
                         {canScrollLeft && (
                             <motion.button
@@ -170,6 +170,7 @@ function FeaturedCollections() {
                         height: 160px !important;
                     }
                     .container { padding: 2rem 15px !important; }
+                    .scroll-buttons { display: none !important; }
                 }
             `}</style>
         </section>
